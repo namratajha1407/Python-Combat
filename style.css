@@ -1,0 +1,16 @@
+.dropdown-toggle::after {
+    content: none;
+}
+
+.work-area{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #5be927;
+}
+
+canvas.arena{
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
