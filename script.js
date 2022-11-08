@@ -1,8 +1,19 @@
-let c = document.getElementById("myCanvas");
-let ctx = c.getContext("2d");
-let h = c.height
-let w = c.width
-console.log(h,w)
-ctx.moveTo(0, 0);
-ctx.lineTo(w, h);
-ctx.stroke();
+document.getElementById('code').addEventListener('keydown', function(e) {
+    if (e.key == 'Tab') {
+        e.preventDefault();
+        var start = this.selectionStart;
+        var end = this.selectionEnd;
+
+        // set textarea value to: text before caret + tab + text after caret
+        this.value = this.value.substring(0, start) +
+        "\t" + this.value.substring(end);
+
+        // put caret at right position again
+        this.selectionStart =
+        this.selectionEnd = start + 1;
+    }
+    if (e.key == 'F5') {
+        e.preventDefault();
+        document.getElementById('run_button').click();
+    }
+});
