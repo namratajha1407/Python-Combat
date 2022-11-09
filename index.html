@@ -86,20 +86,24 @@ print(fib(int(num)))
                     <canvas class="arena" id="myCanvas">
                         Your browser does not support canvas, please upgrade to enjoy the game.
                     </canvas>
-                    <script src="script.js"></script>
-                    <script type="text/python">
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script type="text/python">
 import sys
 from browser import document, alert
 
 class MyOutput:
-        def __init__(self):
-            self.console = document["output"]
+    def __init__(self):
+        self.console = document["output"]
 
-        def write(self, text):
-            self.console.text += text
+    def write(self, text):
+        self.console.text += text
 
 def callScript(event):
-    code = document["code"].value + document["pre_code"].value
+    code = document["code"].value.strip() + "\n" + document["pre_code"].value.strip()
     original = sys.stdout
     print(code)
     document["output"].clear()
@@ -109,10 +113,6 @@ def callScript(event):
     print(code)
 
 document["run_button"].bind("click", callScript)
-                    </script>
-                </span>
-            </div>
-        </div>
-    </div>
-  </body>
+    </script>
+</body>
 
