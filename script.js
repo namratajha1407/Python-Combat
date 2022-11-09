@@ -17,3 +17,60 @@ document.getElementById('code').addEventListener('keydown', function(e) {
         document.getElementById('run_button').click();
     }
 });
+
+var canvas = document.getElementById('myCanvas');
+var context = canvas.getContext('2d');
+
+cHeight = canvas.height;
+cWidth = canvas.width;
+
+function tile(x, y, width, height, walls, color){
+    this.x = x;
+    this.y = y;
+    this.height = height;
+    this.width = width;
+    this.walls = walls;
+    this.color = color;
+
+    this.drawwalls = function(){
+        if(walls[0]){
+            context.beginPath();
+            context.moveTo(this.x*this.width, this.y*this.height);
+            context.closePath();
+        }
+    }
+
+    this.draw = function(){
+        context.beginPath();
+        context.fillStyle = this.color;
+        context.fillRect(this.x*this.width, this.y*this.height, this.width, this.height);
+        context.fill();
+        context.closePath();
+    }
+}
+
+var xTiles = 10;
+var yTiles = 5;
+
+var tiles = new Array(xTiles);
+for (let i = 0; i < xTiles; i++) {
+    tiles[i] = new Array(yTiles);
+    for (let j = 0; j < yTiles; j++) {
+        if ((i+j)%2){
+            tiles[i][j] = new tile(i, j, cWidth/xTiles, cHeight/yTiles, [0, 0, 0, 0], "red");
+        }
+        else{
+            tiles[i][j] = new tile(i, j, cWidth/xTiles, cHeight/yTiles, [0, 0, 0, 0], "blue");
+        }
+        tiles[i][j].draw();
+    }
+}
+
+// console.log(tiles[0][0]);
+
+// context.beginPath();
+// context.fillStyle = "blue";
+// context.fillRect(30, 30, 120, 90);
+// context.fill();
+// context.closePath();
+
