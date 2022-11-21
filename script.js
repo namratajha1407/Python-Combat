@@ -20,9 +20,11 @@ document.getElementById('code').addEventListener('keydown', function(e) {
 
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
+var img = document.getElementById("hero");
 
 cHeight = canvas.height;
 cWidth = canvas.width;
+
 
 function tile(x, y, width, height, walls, color){
     this.x = x;
@@ -52,15 +54,23 @@ function tile(x, y, width, height, walls, color){
 var xTiles = 10;
 var yTiles = 5;
 
+Width = cWidth/xTiles;
+Height = cHeight/yTiles;
+
+imgWidth = Width/2
+imgHeight = Height/1.5
+centerX = Width/2
+centerY = Height/2
+
 var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
         if ((i+j)%2){
-            tiles[i][j] = new tile(i, j, cWidth/xTiles, cHeight/yTiles, [0, 0, 0, 0], "red");
+            tiles[i][j] = new tile(i, j, Width, Height, [0, 0, 0, 0], "red");
         }
         else{
-            tiles[i][j] = new tile(i, j, cWidth/xTiles, cHeight/yTiles, [0, 0, 0, 0], "blue");
+            tiles[i][j] = new tile(i, j, Width, Height, [0, 0, 0, 0], "blue");
         }
         tiles[i][j].draw();
     }

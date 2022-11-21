@@ -63,22 +63,14 @@
                 <span class="work-area">
                     <button id="run_button">Run</button>
                     <textarea id="code" class="code rounded">
-def fib(n):
-        final = 0
 
-        
-
-        return final
 
 </textarea>
                     <textarea id="pre_code" class="code rounded" readonly>
-num = input("Please enter a number")
 
-while num.isnumeric() == 0:
-        num = input("Please enter a number")
-print(fib(int(num)))
 </textarea>
-                    <span id="output" class="output"></span>
+                    <span id="output" class="output"></span>    
+                    <img align="left" width = "50" height="80" src="victory_hero.png" id="hero" hidden>
                 </span>
             </div>
             <div class="col-lg-6 mb-2" style="height: 60vh;">
@@ -91,9 +83,13 @@ print(fib(int(num)))
         </div>
     </div>
     <script src="script.js"></script>
-    <script type="text/python">
+    <script type="text/python" id="script">
 import sys
-from browser import document, alert
+from browser import document, alert, console
+from io import StringIO
+
+canvas = document["myCanvas"]
+context = canvas.getContext("2d")
 
 class MyOutput:
     def __init__(self):
@@ -102,17 +98,116 @@ class MyOutput:
     def write(self, text):
         self.console.text += text
 
+cHeight = canvas.height
+cWidth = canvas.width
+xTiles = 10
+yTiles = 5
+Width = cWidth/xTiles
+Height = cHeight/yTiles
+imgWidth = Width/2
+imgHeight = Height/1.5
+img = document["hero"]
+context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
+centerX = Width/2
+centerY = Height/2
+color = "blue"
+
+class tile:
+    def __init__(self, x, y, width, height, color):
+        self.x = x
+        self.y = y
+        self.height = height
+        self.width = width
+        self.color = color
+
+    def draw(self):
+        context.beginPath()
+        context.fillStyle = self.color
+        context.fillRect(self.x - self.width/2, self.y - self.height/2, self.width, self.height)
+        context.fill()
+        context.closePath()
+def moveRight():
+    global color
+    global centerX
+    if centerX <= cWidth-Width:
+        A = tile(centerX, centerY, Width, Height, color)
+        A.draw()
+        if color == "blue":
+            color = "red"
+        else:
+            color = "blue"
+        centerX += Width
+        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+    else:
+        alert("Your hero is going out of arena")
+def moveLeft():
+    global color
+    global centerX
+    if centerX >= Width:
+        A = tile(centerX, centerY, Width, Height, color)
+        A.draw()
+        if color == "blue":
+            color = "red"
+        else:
+            color = "blue"
+        centerX -= Width
+        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+    else:
+        alert("Your hero is going out of arena")
+def moveDown():
+    global color
+    global centerY
+    if centerY <= cHeight - Height:
+        A = tile(centerX, centerY, Width, Height, color)
+        A.draw()
+        if color == "blue":
+            color = "red"
+        else:
+            color = "blue"
+        centerY += Height
+        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+    else:
+        alert("Your hero is going out of arena")
+def moveUp():
+    global color
+    global centerY
+    if centerY>=Height:
+        A = tile(centerX, centerY, Width, Height, color)
+        A.draw()
+        if color == "blue":
+            color = "red"
+        else:
+            color = "blue"
+        centerY -= Height
+        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+    else:
+        alert("Your hero is going out of arena")
+
 def callScript(event):
+    code = document["pre_code"].value.strip() + "\n" + document["code"].value.strip()
+    print(code)
+    document["output"].clear()
+    exec(code)
+    print(code)
+
+document["run_button"].bind("click", callScript)
+
+    </script>
+    
+</body>
+
+<!-- 
+def callScript(event):
+    global moveX
+    global moveY
     code = document["code"].value.strip() + "\n" + document["pre_code"].value.strip()
     original = sys.stdout
     print(code)
     document["output"].clear()
-    sys.stdout = MyOutput()
+    sys.stdout = mystdout = StringIO()
     exec(code)
     sys.stdout = original
+    move += int(mystdout.getvalue())
+    print(move)
     print(code)
-
-document["run_button"].bind("click", callScript)
-    </script>
-</body>
-
+    document["hero"].style.transform = f"translateX({move}px)" -->
