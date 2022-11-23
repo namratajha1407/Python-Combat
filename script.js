@@ -76,11 +76,8 @@ for (let i = 0; i < xTiles; i++) {
     }
 }
 
-// console.log(tiles[0][0]);
-
-// context.beginPath();
-// context.fillStyle = "blue";
-// context.fillRect(30, 30, 120, 90);
-// context.fill();
-// context.closePath();
-
+$(function() {
+    $("#code").autocomplete({
+        source: ["moveRight()", "moveLeft()", "moveDown()", "moveUp()"]
+    });
+});
