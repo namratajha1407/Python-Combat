@@ -98,7 +98,8 @@
                             },
                             matchBrackets: true,
                             theme: 'monokai',
-                            autofocus: true
+                            autofocus: true,
+                            autocomplete: true
                         });
                         CodeMirror.commands.autocomplete = function (cm) {
                             CodeMirror.simpleHint(cm, CodeMirror.pythonHint);
@@ -255,7 +256,7 @@ def exec_code(code):
 
 def callScript(event):
     document["output"].clear()
-    user_code = document["code"].value.splitlines()
+    user_code = window.editor.getValue().splitlines()
     i=0
     for code in user_code:
         timer.set_timeout(exec_code,i,code)
@@ -271,7 +272,8 @@ from browser import document, window
 
 def file_read(e):
     def onload(e):
-        document['code'].value = e.target.result
+        editor = window.editor
+        editor.setValue(e.target.result)
 
     file = document['fileUpload'].files[0]
     reader = window.FileReader.new()
