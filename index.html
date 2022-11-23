@@ -84,13 +84,14 @@
     <script type="text/python" id="script">
 import sys
 from browser import document, alert, console
+from browser.local_storage import storage
 from io import StringIO
 
 canvas = document["myCanvas"]
 context = canvas.getContext("2d")
 
 class MyOutput:
-    def __init__(self):
+    def __init__(self):  
         self.console = document["output"]
 
     def write(self, text):
@@ -197,10 +198,14 @@ def levelstatus():
     task = "Cross the maze from bottom to win"
     if Down == 4:
         console.log('win')
-        document["output"] <=  "win"
+        storage['Level1'] = 'SUCCESS'
+        document["output"] <= storage['Level1']
+        print(storage['Level1'])
     else:
         console.log('fail')
-        document["output"] <= "fail"
+        storage['Level1'] = 'FAIL'
+        document["output"] <= storage['Level1']
+        print(storage['Level1'])
 
 def callScript(event):
     code = document["pre_code"].value.strip() + "\n" + document["code"].value.strip()
@@ -228,9 +233,9 @@ def file_read(e):
     reader.bind('load', onload)
 
 document["fileUpload"].bind('input', file_read)
+
     </script>
 
-    
 </body>
 
 <!-- 
