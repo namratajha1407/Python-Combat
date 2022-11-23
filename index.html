@@ -19,6 +19,19 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+    
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/python/python.js">
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <script src="Brython/brython.js">
     </script>
@@ -62,15 +75,36 @@
         </div>
     </nav>
     <h1 class="text-center">Python Combat</h1>
-    <div class="container text-center">
+    <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 60vh;">
                 <span class="work-area">
                     <input id="fileUpload" type="file">
                     <button id="run_button">Run</button>
-                    <textarea id="code" class="code rounded" autocomplete="on"
-                    autofocus></textarea>
-                    <textarea id="pre_code" class="code rounded" readonly></textarea>
+                    <textarea id="code" class="code rounded" autocomplete="on"></textarea>
+                    <script>
+                        var codeArea = document.getElementById('code');
+
+                        var editor = CodeMirror.fromTextArea(codeArea, {
+                            mode: {
+                                name: "python",
+                                version: 3,
+                                singleLineStringErrors: false
+                            },
+                            lineNumbers: true,
+                            indentUnit: 4,
+                            extraKeys: {
+                                "Ctrl-Space": "autocomplete"
+                            },
+                            matchBrackets: true,
+                            theme: 'monokai',
+                            autofocus: true
+                        });
+                        CodeMirror.commands.autocomplete = function (cm) {
+                            CodeMirror.simpleHint(cm, CodeMirror.pythonHint);
+                        }
+
+                    </script>
                     <span id="task" class="output">Cross the maze from bottom to win</span>
                     <br>
                     <span id="output" class="output"></span>    
@@ -90,7 +124,7 @@
     <script type="text/python" id="script">
 from browser import timer
 import sys
-from browser import document, alert, console
+from browser import document, alert, console, window
 from browser.local_storage import storage
 from io import StringIO
 
