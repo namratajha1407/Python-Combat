@@ -61,14 +61,12 @@
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 60vh;">
                 <span class="work-area">
+                    <input id="fileUpload" type="file">
                     <button id="run_button">Run</button>
-                    <textarea id="code" class="code rounded">
-
-
-</textarea>
-                    <textarea id="pre_code" class="code rounded" readonly>
-
-</textarea>
+                    <textarea id="code" class="code rounded"></textarea>
+                    <textarea id="pre_code" class="code rounded" readonly></textarea>
+                    <span id="task" class="output">Cross the maze from bottom to win</span>
+                    <br>
                     <span id="output" class="output"></span>    
                     <img align="left" width = "50" height="80" src="victory_hero.png" id="hero" hidden>
                 </span>
@@ -126,9 +124,14 @@ class tile:
         context.fillRect(self.x - self.width/2, self.y - self.height/2, self.width, self.height)
         context.fill()
         context.closePath()
+Left = 0
+Right = 0
+Up = 0
+Down = 0
 def moveRight():
     global color
     global centerX
+    global Right
     if centerX <= cWidth-Width:
         A = tile(centerX, centerY, Width, Height, color)
         A.draw()
@@ -138,11 +141,13 @@ def moveRight():
             color = "blue"
         centerX += Width
         context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        Right+=1
     else:
         alert("Your hero is going out of arena")
 def moveLeft():
     global color
     global centerX
+    global Left
     if centerX >= Width:
         A = tile(centerX, centerY, Width, Height, color)
         A.draw()
@@ -152,11 +157,13 @@ def moveLeft():
             color = "blue"
         centerX -= Width
         context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        Left+=1
     else:
         alert("Your hero is going out of arena")
 def moveDown():
     global color
     global centerY
+    global Down
     if centerY <= cHeight - Height:
         A = tile(centerX, centerY, Width, Height, color)
         A.draw()
@@ -166,11 +173,13 @@ def moveDown():
             color = "blue"
         centerY += Height
         context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        Down+=1
     else:
         alert("Your hero is going out of arena")
 def moveUp():
     global color
     global centerY
+    global Up
     if centerY>=Height:
         A = tile(centerX, centerY, Width, Height, color)
         A.draw()
@@ -180,8 +189,18 @@ def moveUp():
             color = "blue"
         centerY -= Height
         context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        Up+=1
     else:
         alert("Your hero is going out of arena")
+
+def levelstatus():
+    task = "Cross the maze from bottom to win"
+    if Down == 4:
+        console.log('win')
+        document["output"] <=  "win"
+    else:
+        console.log('fail')
+        document["output"] <= "fail"
 
 def callScript(event):
     code = document["pre_code"].value.strip() + "\n" + document["code"].value.strip()
@@ -189,10 +208,28 @@ def callScript(event):
     document["output"].clear()
     exec(code)
     print(code)
+    console.table([Right, Left, Down, Up]);
+    levelstatus()
 
 document["run_button"].bind("click", callScript)
 
     </script>
+
+    <script type="text/python" id="script1">
+from browser import document, window
+
+def file_read(e):
+    def onload(e):
+        document['code'].value = e.target.result
+
+    file = document['fileUpload'].files[0]
+    reader = window.FileReader.new()
+    reader.readAsText(file)
+    reader.bind('load', onload)
+
+document["fileUpload"].bind('input', file_read)
+    </script>
+
     
 </body>
 
