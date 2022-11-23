@@ -13,12 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
         crossorigin="anonymous"></script>
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- jQuery UI library -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-
     
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
@@ -31,6 +25,11 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/python/python.js">
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/addon/hint/show-hint.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/addon/hint/show-hint.css">
+    <script src="python-hint.js"></script>
 
     <link rel="stylesheet" href="style.css">
     <script src="Brython/brython.js">
@@ -98,11 +97,17 @@
                             },
                             matchBrackets: true,
                             theme: 'monokai',
-                            autofocus: true
+                            autofocus: true,
+                            autocomplete: true
                         });
-                        CodeMirror.commands.autocomplete = function (cm) {
-                            CodeMirror.simpleHint(cm, CodeMirror.pythonHint);
-                        }
+                        editor.on('inputRead', function onChange(editor, input) {
+                            if (input.text[0] === ';' || input.text[0] === ' ' || input.text[0] === ":") {
+                                return;
+                            }
+                            editor.showHint({
+                                hint: CodeMirror.pythonHint
+                            });
+                        });
 
                     </script>
                     <span id="task" class="output">Cross the maze from bottom to win</span>
@@ -126,7 +131,6 @@ from browser import timer
 import sys
 from browser import document, alert, console, window
 from browser.local_storage import storage
-from io import StringIO
 
 canvas = document["myCanvas"]
 context = canvas.getContext("2d")
@@ -134,10 +138,8 @@ context = canvas.getContext("2d")
 class MyOutput:
     def __init__(self):  
         self.console = document["output"]
-
     def write(self, text):
         self.console.text += text
-
 cHeight = canvas.height
 cWidth = canvas.width
 xTiles = 10
@@ -151,6 +153,7 @@ context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHe
 centerX = Width/2
 centerY = Height/2
 color = "blue"
+i=0
 
 class tile:
     def __init__(self, x, y, width, height, color):
@@ -171,66 +174,82 @@ Right = 0
 Up = 0
 Down = 0
 def moveRight():
+    global i
     global color
     global centerX
     global Right
     if centerX <= cWidth-Width:
         A = tile(centerX, centerY, Width, Height, color)
-        A.draw()
+        timer.set_timeout(A.draw, i)
+        #A.draw()
         if color == "blue":
             color = "red"
         else:
             color = "blue"
         centerX += Width
-        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        i=i+500
         Right+=1
     else:
         alert("Your hero is going out of arena")
 def moveLeft():
+    global i
     global color
     global centerX
     global Left
     if centerX >= Width:
         A = tile(centerX, centerY, Width, Height, color)
-        A.draw()
+        timer.set_timeout(A.draw, i)
+        #A.draw()
         if color == "blue":
             color = "red"
         else:
             color = "blue"
         centerX -= Width
-        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        i=i+500
         Left+=1
     else:
         alert("Your hero is going out of arena")
 def moveDown():
+    global i
     global color
     global centerY
     global Down
     if centerY <= cHeight - Height:
         A = tile(centerX, centerY, Width, Height, color)
-        A.draw()
+        timer.set_timeout(A.draw, i)
+        #A.draw()
         if color == "blue":
             color = "red"
         else:
             color = "blue"
         centerY += Height
-        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        i=i+500
         Down+=1
     else:
         alert("Your hero is going out of arena")
 def moveUp():
+    global i
     global color
     global centerY
     global Up
     if centerY>=Height:
         A = tile(centerX, centerY, Width, Height, color)
-        A.draw()
+        timer.set_timeout(A.draw, i)
+        #A.draw()
         if color == "blue":
             color = "red"
         else:
             color = "blue"
         centerY -= Height
-        context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
+        i=i+500
         Up+=1
     else:
         alert("Your hero is going out of arena")
@@ -249,17 +268,12 @@ def levelstatus():
         document["output"] <= storage['Level1']
         print(storage['Level1'])
 
-def exec_code(code):
-    print(code)
-    exec(code)
-
 def callScript(event):
+    global i
     document["output"].clear()
-    user_code = document["code"].value.splitlines()
-    i=0
-    for code in user_code:
-        timer.set_timeout(exec_code,i,code)
-        i=i+500
+    user_code = window.editor.getValue().strip()
+    print(user_code)
+    exec(user_code)
     timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)
@@ -271,7 +285,8 @@ from browser import document, window
 
 def file_read(e):
     def onload(e):
-        document['code'].value = e.target.result
+        editor = window.editor
+        editor.setValue(e.target.result)
 
     file = document['fileUpload'].files[0]
     reader = window.FileReader.new()
