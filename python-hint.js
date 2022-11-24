@@ -38,6 +38,7 @@
     }
   
     function pythonHint(editor) {
+<<<<<<< HEAD
       return scriptHint(editor, KeywordsU, function (e, cur) {return e.getTokenAt(cur);});
     }
     CodeMirror.pythonHint = pythonHint; // deprecated
@@ -46,6 +47,22 @@
     var Keywords = "moveRight() moveLeft() moveUp() moveDown()";
     var KeywordsL = Keywords.split(" ");
     var KeywordsU = Keywords.toUpperCase().split(" ");
+=======
+      return scriptHint(editor, pythonKeywordsU, function (e, cur) {return e.getTokenAt(cur);});
+    }
+    CodeMirror.pythonHint = pythonHint; // deprecated
+    CodeMirror.registerHelper("hint", "python", pythonHint);
+  
+    var pythonKeywords = "and from not while as elif or else if pass"
+  + "break import print in continue return def for";
+    var pythonKeywordsL = pythonKeywords.split(" ");
+    var pythonKeywordsU = pythonKeywords.toUpperCase().split(" ");
+  
+    var pythonBuiltins = "input print range "
+  + "moveUp moveDown moveLeft moveRight";
+    var pythonBuiltinsL = pythonBuiltins.split(" ").join("() ").split(" ");
+    var pythonBuiltinsU = pythonBuiltins.toUpperCase().split(" ").join("() ").split(" ");
+>>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
   
     function getCompletions(token, context) {
       var found = [], start = token.string;
@@ -54,8 +71,15 @@
       }
   
       function gatherCompletions(_obj) {
+<<<<<<< HEAD
           forEach(KeywordsL, maybeAdd);
           forEach(KeywordsU, maybeAdd);
+=======
+          forEach(pythonBuiltinsL, maybeAdd);
+          forEach(pythonBuiltinsU, maybeAdd);
+          forEach(pythonKeywordsL, maybeAdd);
+          forEach(pythonKeywordsU, maybeAdd);
+>>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
       }
   
       if (context) {
