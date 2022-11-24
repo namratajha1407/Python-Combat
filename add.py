@@ -1,2 +1,0 @@
-hero.moveRight()
-hero.moveDown()
