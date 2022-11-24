@@ -60,7 +60,7 @@ canvas.arena{
     transition: 1s;
     /* margin: 20px 0; */
 }
-#import_button{
+#fileUpload{
     cursor: pointer;
     display: block;
     position: relative;

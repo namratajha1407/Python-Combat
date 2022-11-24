@@ -1,46 +1,20 @@
-document.getElementById('code').addEventListener('keydown', function(e) {
-    if (e.key == 'Tab') {
-        e.preventDefault();
-        var start = this.selectionStart;
-        var end = this.selectionEnd;
-
-        // set textarea value to: text before caret + tab + text after caret
-        this.value = this.value.substring(0, start) +
-        "\t" + this.value.substring(end);
-
-        // put caret at right position again
-        this.selectionStart =
-        this.selectionEnd = start + 1;
-    }
-    if (e.key == 'F5') {
-        e.preventDefault();
-        document.getElementById('run_button').click();
-    }
-});
-
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
-var img = document.getElementById("hero");
 
-cHeight = canvas.height;
-cWidth = canvas.width;
+var cHeight = canvas.height;
+var cWidth = canvas.width;
 
+var xTiles = 5;
+var yTiles = 5;
 
-function tile(x, y, width, height, walls, color){
+// console.log(xTiles);
+
+function tile(x, y, width, height, color){
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
-    this.walls = walls;
     this.color = color;
-
-    this.drawwalls = function(){
-        if(walls[0]){
-            context.beginPath();
-            context.moveTo(this.x*this.width, this.y*this.height);
-            context.closePath();
-        }
-    }
 
     this.draw = function(){
         context.beginPath();
@@ -51,33 +25,20 @@ function tile(x, y, width, height, walls, color){
     }
 }
 
-var xTiles = 10;
-var yTiles = 5;
 
-Width = cWidth/xTiles;
-Height = cHeight/yTiles;
-
-imgWidth = Width/2
-imgHeight = Height/1.5
-centerX = Width/2
-centerY = Height/2
+var Width = cWidth/xTiles;
+var Height = cHeight/yTiles;
 
 var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
         if ((i+j)%2){
-            tiles[i][j] = new tile(i, j, Width, Height, [0, 0, 0, 0], "red");
+            tiles[i][j] = new tile(i, j, Width, Height, "red");
         }
         else{
-            tiles[i][j] = new tile(i, j, Width, Height, [0, 0, 0, 0], "blue");
+            tiles[i][j] = new tile(i, j, Width, Height, "blue");
         }
         tiles[i][j].draw();
     }
 }
-
-$(function() {
-    $("#code").autocomplete({
-        source: ["moveRight()", "moveLeft()", "moveDown()", "moveUp()"]
-    });
-});

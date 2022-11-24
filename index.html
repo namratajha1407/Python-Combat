@@ -76,7 +76,7 @@
     <h1 class="text-center">Python Combat</h1>
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 mb-2" style="height: 60vh;">
+            <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
                     <input id="fileUpload" type="file">
                     <button id="run_button">Run</button>
@@ -105,8 +105,15 @@
                                 return;
                             }
                             editor.showHint({
-                                hint: CodeMirror.pythonHint
+                                hint: CodeMirror.pythonHint,
+                                completeSingle: false
                             });
+                        });
+                        editor.on('keydown', function(editor, e){
+                            if (e.key == 'F5') {
+                                e.preventDefault();
+                                document.getElementById('run_button').click();
+                            }
                         });
 
                     </script>
@@ -116,7 +123,7 @@
                     <img align="left" width = "50" height="80" src="victory_hero.png" id="hero" hidden>
                 </span>
             </div>
-            <div class="col-lg-6 mb-2" style="height: 60vh;">
+            <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
                     <canvas class="arena" id="myCanvas">
                         Your browser does not support canvas, please upgrade to enjoy the game.
@@ -138,125 +145,76 @@ context = canvas.getContext("2d")
 class MyOutput:
     def __init__(self):  
         self.console = document["output"]
+
     def write(self, text):
         self.console.text += text
+
 cHeight = canvas.height
 cWidth = canvas.width
-xTiles = 10
-yTiles = 5
-Width = cWidth/xTiles
-Height = cHeight/yTiles
+xtiles = window.xTiles
+ytiles = window.yTiles
+Width = cWidth/xtiles
+Height = cHeight/ytiles
 imgWidth = Width/2
 imgHeight = Height/1.5
 img = document["hero"]
-context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
-centerX = Width/2
-centerY = Height/2
-color = "blue"
-i=0
+# context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 
-class tile:
-    def __init__(self, x, y, width, height, color):
+tiles = window.tiles
+
+class Entity:
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.height = height
-        self.width = width
-        self.color = color
+    
+    def moveLeft(self):
+        if (self.x>0):
+            tiles[self.x][self.y].draw()
+            self.x -= 1
+            self.draw()
+            return True
+        alert('Your hero is going out of arena')
+        return False
+    
+    def moveUp(self):
+        if (self.y>0):
+            tiles[self.x][self.y].draw()
+            self.y -= 1
+            self.draw()
+            return True
+        alert('Your hero is going out of arena')
+        return False
+    
+    def moveRight(self):
+        if (self.x < xtiles-1):
+            tiles[self.x][self.y].draw()
+            self.x += 1
+            self.draw()
+            return True
+        alert('Your hero is going out of arena')
+        return False
 
+    def moveDown(self):
+        if (self.y < ytiles-1):
+            tiles[self.x][self.y].draw()
+            self.y += 1
+            self.draw()
+            return True
+        alert('Your hero is going out of arena')
+        return False
+    
     def draw(self):
         context.beginPath()
-        context.fillStyle = self.color
-        context.fillRect(self.x - self.width/2, self.y - self.height/2, self.width, self.height)
-        context.fill()
+        context.drawImage(img, self.x*Width + imgWidth/2, self.y*Height + imgHeight/2, imgWidth, imgHeight)
         context.closePath()
-Left = 0
-Right = 0
-Up = 0
-Down = 0
-def moveRight():
-    global i
-    global color
-    global centerX
-    global Right
-    if centerX <= cWidth-Width:
-        A = tile(centerX, centerY, Width, Height, color)
-        timer.set_timeout(A.draw, i)
-        #A.draw()
-        if color == "blue":
-            color = "red"
-        else:
-            color = "blue"
-        centerX += Width
-        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        i=i+500
-        Right+=1
-    else:
-        alert("Your hero is going out of arena")
-def moveLeft():
-    global i
-    global color
-    global centerX
-    global Left
-    if centerX >= Width:
-        A = tile(centerX, centerY, Width, Height, color)
-        timer.set_timeout(A.draw, i)
-        #A.draw()
-        if color == "blue":
-            color = "red"
-        else:
-            color = "blue"
-        centerX -= Width
-        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        i=i+500
-        Left+=1
-    else:
-        alert("Your hero is going out of arena")
-def moveDown():
-    global i
-    global color
-    global centerY
-    global Down
-    if centerY <= cHeight - Height:
-        A = tile(centerX, centerY, Width, Height, color)
-        timer.set_timeout(A.draw, i)
-        #A.draw()
-        if color == "blue":
-            color = "red"
-        else:
-            color = "blue"
-        centerY += Height
-        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        i=i+500
-        Down+=1
-    else:
-        alert("Your hero is going out of arena")
-def moveUp():
-    global i
-    global color
-    global centerY
-    global Up
-    if centerY>=Height:
-        A = tile(centerX, centerY, Width, Height, color)
-        timer.set_timeout(A.draw, i)
-        #A.draw()
-        if color == "blue":
-            color = "red"
-        else:
-            color = "blue"
-        centerY -= Height
-        timer.set_timeout(context.drawImage, i, img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        #context.drawImage(img, centerX - imgWidth/2, centerY-imgHeight/2, imgWidth, imgHeight)
-        i=i+500
-        Up+=1
-    else:
-        alert("Your hero is going out of arena")
+    
+hero = Entity(0, 0)
+hero.draw()
+
 
 def levelstatus():
     task = "Cross the maze from bottom to win"
-    if Down == 4:
+    if hero.y == 4:
         console.log('win')
         storage['Level1'] = 'SUCCESS!'
         document["output"] <= storage['Level1']
@@ -267,13 +225,22 @@ def levelstatus():
         storage['Level1'] = 'FAIL! Try again!'
         document["output"] <= storage['Level1']
         print(storage['Level1'])
+        tiles[hero.x][hero.y].draw()
+        hero.x = 0
+        hero.y = 0
+        hero.draw()
+
+def exec_code(code):
+    print(code)
+    exec(code)
 
 def callScript(event):
-    global i
     document["output"].clear()
-    user_code = window.editor.getValue().strip()
-    print(user_code)
-    exec(user_code)
+    user_code = window.editor.getValue().splitlines()
+    i=0
+    for code in user_code:
+        timer.set_timeout(exec_code,i,code)
+        i=i+500
     timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)
