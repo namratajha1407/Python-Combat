@@ -38,19 +38,6 @@
     }
   
     function pythonHint(editor) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      return scriptHint(editor, KeywordsU, function (e, cur) {return e.getTokenAt(cur);});
-    }
-    CodeMirror.pythonHint = pythonHint; // deprecated
-    CodeMirror.registerHelper("hint", "python", pythonHint);
-
-    var Keywords = "moveRight() moveLeft() moveUp() moveDown()";
-    var KeywordsL = Keywords.split(" ");
-    var KeywordsU = Keywords.toUpperCase().split(" ");
-=======
-=======
->>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
       return scriptHint(editor, pythonKeywordsU, function (e, cur) {return e.getTokenAt(cur);});
     }
     CodeMirror.pythonHint = pythonHint; // deprecated
@@ -61,14 +48,10 @@
     var pythonKeywordsL = pythonKeywords.split(" ");
     var pythonKeywordsU = pythonKeywords.toUpperCase().split(" ");
   
-    var pythonBuiltins = "input print range "
-  + "moveUp moveDown moveLeft moveRight";
+    var pythonBuiltins = "print range "
+  + "hero.moveUp hero.moveDown hero.moveLeft hero.moveRight input";
     var pythonBuiltinsL = pythonBuiltins.split(" ").join("() ").split(" ");
     var pythonBuiltinsU = pythonBuiltins.toUpperCase().split(" ").join("() ").split(" ");
-<<<<<<< HEAD
->>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
-=======
->>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
   
     function getCompletions(token, context) {
       var found = [], start = token.string;
@@ -77,21 +60,10 @@
       }
   
       function gatherCompletions(_obj) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-          forEach(KeywordsL, maybeAdd);
-          forEach(KeywordsU, maybeAdd);
-=======
-=======
->>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
           forEach(pythonBuiltinsL, maybeAdd);
           forEach(pythonBuiltinsU, maybeAdd);
           forEach(pythonKeywordsL, maybeAdd);
           forEach(pythonKeywordsU, maybeAdd);
-<<<<<<< HEAD
->>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
-=======
->>>>>>> 09221c6c0200c9019fc569d9d2cd969a0e862367
       }
   
       if (context) {

@@ -1,0 +1,97 @@
+.dropdown-toggle::after {
+    content: none;
+}
+
+.work-area{
+    display: block;
+    width: 100%;
+    height: 90%;
+    background-color: #5be927;
+    border-radius: 1%;
+}
+
+.card{
+    margin: 20px 0;
+    border: #ccc 1px solid;
+    padding: 20px;
+}
+
+.code{
+    float: left;
+    cursor: text;
+    position: relative;
+    width: 50%;
+    height: 50%;
+    resize: none;
+}
+
+canvas.arena{
+    border-radius: 1%;
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+}
+
+
+.button{
+    cursor: pointer;
+    display: block;
+    background: #333;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 0px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* margin: 20px 0; */
+}
+
+#run_button{
+    cursor: pointer;
+    display: block;
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+    background: rgb(31, 182, 34);
+    color: rgb(13, 5, 19);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: 1s;
+    /* margin: 20px 0; */
+}
+#fileUpload{
+    cursor: pointer;
+    display: block;
+    position: relative;
+    bottom: 1px;
+    right: 0px;
+    background: rgb(31, 182, 34);
+    color: rgb(13, 5, 19);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* margin: 20px 0; */
+}
+
+.box{
+    background: steelblue;
+    width: 1.6em;
+    height: 1.6em;
+}
+
+input[type="file"]::file-selector-button {
+    position: relative;
+    border: 1px solid black;
+    padding: 0px 0px;
+    border-radius: 5px;
+    background: rgb(31, 182, 34);
+    transition: 1s;
+  }
+  
+input[type="file"]::file-selector-button:hover {
+background-color: #81ecec;
+border: 1px solid #00cec9;
+}
+  

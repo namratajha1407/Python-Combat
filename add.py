@@ -1,0 +1,2 @@
+hero.moveRight()
+hero.moveDown()
