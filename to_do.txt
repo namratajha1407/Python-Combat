@@ -1,0 +1,8 @@
+- logger - placement of the success and fail buttons
+- sprites
+- textarea mei cursor placement at the end
+- beautification
+- score counter
+- timer
+- naam puchna
+- only python files allowed to be uploaded
