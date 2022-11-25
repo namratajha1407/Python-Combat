@@ -76,8 +76,10 @@
     <h1 class="text-center">Python Combat - Level 1</h1>
     <p> Reach the bottom right corner, after collecting all coins to win!</p>
     <div class="container" id="game_area">
-        <button id="success">Well Done! Next Level</button>
-        <button id="fail">Try Again!</button>
+        <div id="button_div">
+            <button id="success">Well Done! Next Level</button>
+            <button id="fail">Try Again!</button>
+        </div>
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
@@ -189,7 +191,7 @@ def moveRight():
         index_hero_x += 1
         if(tiles[index_hero_x][index_hero_y].coin()):
             num_coins-=1
-            tiles[index_hero_x][index_hero_x].coin_t_to_f()
+            tiles[index_hero_x][index_hero_y].coin_t_to_f()
             timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
         i+=500
@@ -205,7 +207,7 @@ def moveLeft():
         index_hero_x -= 1
         if(tiles[index_hero_x][index_hero_y].coin()):
             num_coins-=1
-            tiles[index_hero_x][index_hero_x].coin_t_to_f()
+            tiles[index_hero_x][index_hero_y].coin_t_to_f()
             timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
         i+=500
@@ -221,7 +223,7 @@ def moveDown():
         index_hero_y += 1
         if(tiles[index_hero_x][index_hero_y].coin()):
             num_coins-=1
-            tiles[index_hero_x][index_hero_x].coin_t_to_f()
+            tiles[index_hero_x][index_hero_y].coin_t_to_f()
             timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
         i+=500
@@ -237,7 +239,7 @@ def moveUp():
         index_hero_y -= 1
         if(tiles[index_hero_x][index_hero_y].coin()):
             num_coins-=1
-            tiles[index_hero_x][index_hero_x].coin_t_to_f()
+            tiles[index_hero_x][index_hero_y].coin_t_to_f()
             timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
         i+=500
