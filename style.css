@@ -2,6 +2,11 @@
     content: none;
 }
 
+.dropdown:hover .dropdown-menu{
+    display: block;
+    margin: 0;
+}
+
 .work-area{
     display: block;
     width: 100%;
