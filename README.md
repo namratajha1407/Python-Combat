@@ -6,9 +6,7 @@ Then you get the option to proceed further or play again.
 
 Writing and running your code-
 
-You have the option to directly write in our syntax highlighting code editor, or you can upload a file with your code written in it by using the "Choose File" button. 
-
-To run the code, you can either press the run button or click the "F5" button on your keyboard.
+You have the option to directly write in our syntax highlighting code editor, or you can upload a file with your code written in it by using the "Choose File" button. To run the code, you can either press the run button or click the "F5" button on your keyboard.
 
 About the Game-
 
