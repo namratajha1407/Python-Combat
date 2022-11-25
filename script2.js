@@ -5,7 +5,7 @@ var coin_img = document.getElementById('coin');
 var cHeight = canvas.height;
 var cWidth = canvas.width;
 
-var r = 10 + Math.floor(Math.random(5));
+var r = Math.floor(Math.random()*(2))*5 + 10;
 
 var xTiles = r;
 var yTiles = r;
@@ -56,14 +56,16 @@ success = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
     //show "Well done! Next Level" button, which loads the next page
-    document.getElementById("success").style.display = "block";
+    var success_button = document.getElementById("success");
+    success_button.style.display = "block";
 }
 
 fail = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
     //show "Try Again!" button, which reloads the page
-    document.getElementById("fail").style.display = "block";
+    var fail_button = document.getElementById("fail");
+    fail_button.style.display = "block";
 }
 
 document.getElementById("success").onclick = function(){
