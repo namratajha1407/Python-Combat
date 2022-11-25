@@ -5,7 +5,7 @@ var coin_img = document.getElementById('coin');
 var cHeight = canvas.height;
 var cWidth = canvas.width;
 
-var r = Math.floor(Math.random()*(2))*5 + 10;
+var r = Math.floor(Math.random()*(10)) + 10;
 
 var xTiles = r;
 var yTiles = r;
