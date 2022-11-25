@@ -49,7 +49,7 @@
     var pythonKeywordsU = pythonKeywords.toUpperCase().split(" ");
   
     var pythonBuiltins = "print range "
-  + "hero.moveUp hero.moveDown hero.moveLeft hero.moveRight input";
+  + "moveUp moveDown moveLeft moveRight attack enemy unveil_friend input";
     var pythonBuiltinsL = pythonBuiltins.split(" ").join("() ").split(" ");
     var pythonBuiltinsU = pythonBuiltins.toUpperCase().split(" ").join("() ").split(" ");
   

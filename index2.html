@@ -82,8 +82,6 @@
     <h1 class="text-center">Python Combat - Level 2</h1>
     <p> Reach the bottom right corner preventing the black forbidden region!</p>
     <div class="container" id="game_area">
-        <button id="success">Well Done! Next Level</button>
-        <button id="fail">Try Again!</button>
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
@@ -151,6 +149,15 @@
             </div>
         </div>
     </div>
+    <div id="Success">
+        <h2>You Win!</h2>
+        <button id="next">Next Level</button>
+        <button id="sretry">Play Again!</button>
+    </div>
+    <div id="Fail">
+        <h2>You Failed!</h2>
+        <button id="fretry">Try Again!</button>
+    </div>
     <script src="script2.js"></script>
     <script type="text/python" id="script">
 from browser import timer
@@ -201,6 +208,7 @@ def moveRight():
             timer.set_timeout(window.fail,i)
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 def moveLeft():
     global color
     global index_hero_x
@@ -216,6 +224,7 @@ def moveLeft():
             timer.set_timeout(window.fail,i)
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 def moveDown():
     global color
     global index_hero_y
@@ -231,6 +240,7 @@ def moveDown():
             timer.set_timeout(window.fail,i)
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 def moveUp():
     global color
     global index_hero_y
@@ -246,6 +256,7 @@ def moveUp():
             timer.set_timeout(window.fail,i)
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 
 def levelstatus():
     task = "Cross the maze to win"

@@ -85,10 +85,6 @@
         <br> Before stepping into the black region, you have to check if it is forbidden or not. Also, it is a big big maze... Can recursion help?
     </p>
     <div class="container" id="game_area">
-        <div id="button_div">
-            <button id="success">Well Done! Next Level</button>
-            <button id="fail">Try Again!</button>
-        </div>
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
@@ -144,6 +140,8 @@
                     <span id="output" class="output"></span>    
                     <img src="victory_hero.png" id="hero" hidden>
                     <img src="coin.png" id="coin" hidden>
+                    <img src="grass.jpg" id="grass" hidden>
+                    <img src="water.jpg" alt="" id="water" hidden>
                     <!-- <img id="arena_image" hidden> -->
                 </span>
             </div>
@@ -155,6 +153,15 @@
                 </span>
             </div>
         </div>
+    </div>
+    <div id="Success">
+        <h2>You Win!</h2>
+        <button id="next">Next Level</button>
+        <button id="sretry">Play Again!</button>
+    </div>
+    <div id="Fail">
+        <h2>You Failed!</h2>
+        <button id="fretry">Try Again!</button>
     </div>
     <script src="script4.js"></script>
     <script type="text/python" id="script">
@@ -214,6 +221,7 @@ def moveRight():
         i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 def moveLeft():
     global color
     global index_hero_x
@@ -229,6 +237,7 @@ def moveLeft():
         i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 def moveDown():
     global color
     global index_hero_y
@@ -240,6 +249,7 @@ def moveDown():
         i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 def moveUp():
     global color
     global index_hero_y 
@@ -251,6 +261,7 @@ def moveUp():
         i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
+        timer.set_timeout(window.fail,i)
 
 def levelstatus():
     task = "Cross the maze to win"

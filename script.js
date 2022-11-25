@@ -4,8 +4,11 @@ var context = canvas.getContext('2d');
 var cHeight = canvas.height;
 var cWidth = canvas.width;
 
-var xTiles = 5;
-var yTiles = 5;
+var grass = document.getElementById('grass');
+var water = document.getElementById('water');
+
+var xTiles = 3;
+var yTiles = 3;
 
 // console.log(xTiles);
 
@@ -18,9 +21,7 @@ function tile(x, y, width, height, color){
 
     this.draw = function(){
         context.beginPath();
-        context.fillStyle = this.color;
-        context.fillRect(this.x*this.width, this.y*this.height, this.width, this.height);
-        context.fill();
+        context.drawImage(color, this.x*this.width, this.y*this.height, this.width, this.height);
         context.closePath();
     }
 }
@@ -33,12 +34,37 @@ var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
-        if ((i+j)%2){
-            tiles[i][j] = new tile(i, j, Width, Height, "red");
-        }
-        else{
-            tiles[i][j] = new tile(i, j, Width, Height, "blue");
-        }
+        tiles[i][j] = new tile(i, j, Width, Height, grass);
         tiles[i][j].draw();
     }
 }
+
+success = function(){
+    var game = document.getElementById("game_area");
+    game.style.opacity = 0.5;
+    //show "Well done! Next Level" button, which loads the next page
+    var success = document.getElementById("Success");
+    success.style.display = "block";
+    success.style.opacity = 1;
+}
+
+fail = function(){
+    var game = document.getElementById("game_area");
+    game.style.opacity = 0.5;
+    //show "Try Again!" button, which reloads the page
+    var fail = document.getElementById("Fail");
+    fail.style.display = "block";
+    fail.style.opacity = 1;
+}
+
+document.getElementById("next").onclick = function(){
+    location.href = "index1.html";
+};
+
+document.getElementById("sretry").onclick = function(){
+    location.reload();
+};
+
+document.getElementById("fretry").onclick = function(){
+    location.reload();
+};

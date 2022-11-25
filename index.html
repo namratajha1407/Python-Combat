@@ -80,7 +80,7 @@
         </div>
     </nav>
     <h1 class="text-center">Python Combat</h1>
-    <div class="container">
+    <div class="container" id="game_area">
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
@@ -139,6 +139,15 @@
             </div>
         </div>
     </div>
+    <div id="Success">
+        <h2>You Win!</h2>
+        <button id="next">Next Level</button>
+        <button id="sretry">Play Again!</button>
+    </div>
+    <div id="Fail">
+        <h2>You Failed!</h2>
+        <button id="fretry">Try Again!</button>
+    </div>
     <script src="script.js"></script>
     <script type="text/python" id="script">
 from browser import timer
@@ -166,88 +175,86 @@ imgWidth = Width/2
 imgHeight = Height/1.5
 img = document["hero"]
 # context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
+i=0
 
 tiles = window.tiles
+index_hero_x = 0
+index_hero_y = 0
 
-class Entity:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-    
-    def moveLeft(self):
-        if (self.x>0):
-            tiles[self.x][self.y].draw()
-            self.x -= 1
-            self.draw()
-            return True
-        alert('Your hero is going out of arena')
-        return False
-    
-    def moveUp(self):
-        if (self.y>0):
-            tiles[self.x][self.y].draw()
-            self.y -= 1
-            self.draw()
-            return True
-        alert('Your hero is going out of arena')
-        return False
-    
-    def moveRight(self):
-        if (self.x < xtiles-1):
-            tiles[self.x][self.y].draw()
-            self.x += 1
-            self.draw()
-            return True
-        alert('Your hero is going out of arena')
-        return False
+context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 
-    def moveDown(self):
-        if (self.y < ytiles-1):
-            tiles[self.x][self.y].draw()
-            self.y += 1
-            self.draw()
-            return True
-        alert('Your hero is going out of arena')
-        return False
-    
-    def draw(self):
-        context.beginPath()
-        context.drawImage(img, self.x*Width + imgWidth/2, self.y*Height + imgHeight/2, imgWidth, imgHeight)
-        context.closePath()
-    
-hero = Entity(0, 0)
-hero.draw()
+def moveRight():
+    global color
+    global index_hero_x
+    global i
+    if index_hero_x < xtiles-1:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_x += 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+    else:
+        alert("Your hero is going out of arena")
+def moveLeft():
+    global color
+    global index_hero_x
+    global i
+    if index_hero_x > 0:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_x -= 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+    else:
+        alert("Your hero is going out of arena")
+def moveDown():
+    global color
+    global index_hero_y
+    global i
+    if index_hero_y < ytiles-1:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_y += 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+    else:
+        alert("Your hero is going out of arena")
+def moveUp():
+    global color
+    global index_hero_y
+    global i
+    if index_hero_y >= 0:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_y -= 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+    else:
+        alert("Your hero is going out of arena")
+
 
 
 def levelstatus():
-    task = "Cross the maze from bottom to win"
-    if hero.y == 4:
-        console.log('win')
-        storage['Level1'] = 'SUCCESS!'
-        document["output"] <= storage['Level1']
-        print(storage['Level1'])
-    else:
-        #reload to initial configuration
-        console.log('fail')
-        storage['Level1'] = 'FAIL! Try again!'
-        document["output"] <= storage['Level1']
-        print(storage['Level1'])
-        tiles[hero.x][hero.y].draw()
-        hero.x = 0
-        hero.y = 0
-        hero.draw()
-
-def exec_code(code):
-    print(code)
-    exec(code)
+    task = "Cross the maze and collect all coins to win"
+    #reload to initial configuration
+    if index_hero_x == xtiles-1 and index_hero_y == ytiles-1:
+        console.log('Win')
+        storage['Level1'] = 'YOU WIN!'
+        #document["output"] <= storage['Level1']
+        window.success()
+        return
+    #reload to initial configuration
+    console.log('fail')
+    storage['Level1'] = 'FAIL! Try again!'
+    #document["output"] <= storage['Level1']
+    window.fail()
+    return
 
 def callScript(event):
     document["output"].clear()
-    user_code = window.editor.getValue().splitlines()
-    i=0
-    for code in user_code:
-        timer.set_timeout(exec_code,i,code)
-        i=i+500
+    user_code = window.editor.getValue().strip()
+    print(user_code)
+    original = sys.stdout
+    document["output"].clear()
+    sys.stdout = MyOutput()
+    exec(user_code)
+    sys.stdout = original
     timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)

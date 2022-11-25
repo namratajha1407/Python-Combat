@@ -5,6 +5,9 @@ var coin_img = document.getElementById('coin');
 var cHeight = canvas.height;
 var cWidth = canvas.width;
 
+var grass = document.getElementById('grass');
+var water = document.getElementById('water');
+
 var r = Math.floor(Math.random()*(10)) + 10;
 
 var xTiles = r;
@@ -20,9 +23,7 @@ function tile(x, y, width, height, color, is_coin){
 
     this.draw = function(){
         context.beginPath();
-        context.fillStyle = this.color;
-        context.fillRect(this.x*this.width, this.y*this.height, this.width, this.height, false);
-        context.fill();
+        context.drawImage(color, this.x*this.width, this.y*this.height, this.width, this.height);
         context.closePath();
     }
 
@@ -52,27 +53,36 @@ for (let i = 0; i < xTiles; i++) {
     }
 }
 
+
+document.getElementById("output").innerText = "This is a " + xTiles + "*" + yTiles + " maze"
+
 success = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
     //show "Well done! Next Level" button, which loads the next page
-    var success_button = document.getElementById("success");
-    success_button.style.display = "block";
+    var success = document.getElementById("Success");
+    success.style.display = "block";
+    success.style.opacity = 1;
 }
 
 fail = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
     //show "Try Again!" button, which reloads the page
-    var fail_button = document.getElementById("fail");
-    fail_button.style.display = "block";
+    var fail = document.getElementById("Fail");
+    fail.style.display = "block";
+    fail.style.opacity = 1;
 }
 
-document.getElementById("success").onclick = function(){
+document.getElementById("next").onclick = function(){
     location.href = "index3.html"
 };
 
-document.getElementById("fail").onclick = function(){
+document.getElementById("sretry").onclick = function(){
+    location.reload()
+};
+
+document.getElementById("fretry").onclick = function(){
     location.reload()
 };
 

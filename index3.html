@@ -42,7 +42,7 @@
   <body onload="brython(1)">
     <nav class="navbar navbar-expand-lg bg-gradient">
         <div class="container-fluid">
-            <a class="navbar-brand button me-5" href="#">Python Combat</a>
+            <a class="navbar-brand button me-5" href="index.html">Python Combat</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -61,13 +61,19 @@
                 </div>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">More Python</a>
+                        <a class="nav-link active" href="https://www.w3schools.com/python/" target="_blank">More Python</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Log Out</a>
+                        <div class="nav-item dropdown me-auto mb-lg-0">
+                            <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                                Contact us
+                            </a>
+                            <ul class="dropdown-menu" style="right: 0; left: auto;">
+                                <li><a class="dropdown-item" href="https://www.cse.iitb.ac.in/~adityaraj/" target="_blank">Aditya Raj</a></li>
+                                <li><a class="dropdown-item" href="https://www.cse.iitb.ac.in/~anshikaraman/" target="_blank">Anshika Raman</a></li>
+                                <li><a class="dropdown-item" href="https://www.cse.iitb.ac.in/~namratajha/" target="_blank">Namrata Jha</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -81,10 +87,6 @@
         Beware! Don't kill you friend or get yourself killed! 
     </p>
     <div class="container" id="game_area">
-        <div id="button_div">
-            <button id="success">Well Done! Next Level</button>
-            <button id="fail">Try Again!</button>
-        </div>
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
                 <span class="work-area">
@@ -97,9 +99,9 @@
 # You can use the following inbuilt functions: 
 # movement- moveRight(), moveLeft(), moveDown(), moveUp()
 # attack on the right tile- attack()
-# to unlock friend- friend()
+# to unlock friend- unveil_friend()
 # check whether enemy in right tile- enemy()
-                    </textarea>
+</textarea>
                     <script>
                         var codeArea = document.getElementById('code');
 
@@ -134,13 +136,14 @@
                                 document.getElementById('run_button').click();
                             }
                         });
+                        editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
                     <span id="task" class="output"></span>
                     <br>
                     <span id="output" class="output"></span>    
                     <img src="victory_hero.png" id="hero" hidden>
-                    <img src="coin.jpg" id="coin" hidden>
+                    <img src="coin.png" id="coin" hidden>
                     <img src="villian1.jpg" id="villain1" hidden>
                     <img src="villian2.jpeg" id="villain2" hidden>
                     <img src="bomb.jpg" id="bomb" hidden>
@@ -157,6 +160,15 @@
                 </span>
             </div>
         </div>
+    </div>
+    <div id="Success">
+        <h2>You Win!</h2>
+        <button id="next">Next Level</button>
+        <button id="sretry">Play Again!</button>
+    </div>
+    <div id="Fail">
+        <h2>You Failed!</h2>
+        <button id="fretry">Try Again!</button>
     </div>
     <script src="script3.js"></script>
     <script type="text/python" id="script">
@@ -205,35 +217,35 @@ def enemy():
         return True
     return False
 
-def friend():
+def unveil_friend():
     global i
     if tiles[index_hero_x+1][index_hero_y].is_enemy():
         timer.set_timeout(context.drawImage,i, bomb_img, (index_hero_x)*Width, index_hero_y*Height, Width, Height)
-        i+=500
         timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         timer.set_timeout(alert,i,"Enemy killed you!")
         timer.set_timeout(window.fail,i)
     elif tiles[index_hero_x+1][index_hero_y].is_friend():
         timer.set_timeout(context.drawImage,i, friend_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
-        timer.set_timeout(alert, i, "Hey! Thank you for not killing me!")
-        i+=500
+        timer.set_timeout(print, i, "Hey! Thank you for not killing me!")
+        tiles[index_hero_x+1][index_hero_y].allowed = 1
     else:
         timer.set_timeout(alert,i,"No one in the Right")
         timer.set_timeout(window.fail,i)
+    i += 500
 
 def attack():
     global i
     global num_villain
     if tiles[index_hero_x+1][index_hero_y].is_enemy():
-        timer.set_timeout(context.drawImage,i, bomb_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
-        i+=500
+        tiles[index_hero_x+1][index_hero_y].allowed = 1
+        timer.set_timeout(context.drawImage, i, bomb_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
         timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, villain_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
+        tiles[index_hero_x+1][index_hero_y].allowed = 1
         i+=500
         num_villain-=1;
     elif tiles[index_hero_x+1][index_hero_y].is_friend():
         timer.set_timeout(context.drawImage,i, bomb_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
-        i+=500
         timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, friend_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
         i+=500
