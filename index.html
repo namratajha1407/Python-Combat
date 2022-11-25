@@ -79,7 +79,16 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center">Python Combat</h1>
+    <h1 class="text-center">Python Combat - Tutorial(Know your functions)</h1>
+    <p>
+        You have to reach the bottom right corner of the maze to complete the tutorial. <br>
+        You can use moveDown(), moveUp(), moveLeft(), and moveRight() to navigate the maze. <br>
+        The hero can move freely in the area, but cannot go outside it. <br>
+        moveDown() moves the hero one tile down. <br>
+        moveUp() moves the hero one tile up. <br>
+        moveLeft() moves the hero one tile left. <br>
+        moveRight() moves the hero one tile right. <br>
+    </p>
     <div class="container" id="game_area">
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
@@ -124,9 +133,8 @@
                         editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
-                    <span id="task" class="output">Cross the maze from bottom to win</span>
-                    <br>
-                    <span id="output" class="output"></span>    
+                    <span id="output" class="output"></span>
+                    <br>    
                     <img align="left" width = "50" height="80" src="victory_hero.png" id="hero" hidden>
                     <img src="grass.jpg" alt="" id="grass" hidden>
                     <img src="water.jpg" alt="" id="water" hidden>

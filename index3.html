@@ -139,9 +139,8 @@
                         editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
-                    <span id="task" class="output"></span>
-                    <br>
-                    <span id="output" class="output"></span>    
+                    <span id="output" class="output"></span> 
+                    <br> 
                     <img src="victory_hero.png" id="hero" hidden>
                     <img src="coin.png" id="coin" hidden>
                     <img src="villian1.jpg" id="villain1" hidden>
@@ -220,27 +219,6 @@ def enemy():
     return False
 
 def unveil_friend():
-    '''global i, num_villain
-    if tiles[index_hero_x+1][index_hero_y].is_enemy():
-        tiles[index_hero_x+1][index_hero_y].color = villain_dead
-        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
-        tiles[index_hero_x][index_hero_y].color = bomb_img
-        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
-        timer.set_timeout(alert,i,"Enemy killed you!")
-        timer.set_timeout(window.fail,i)
-    elif tiles[index_hero_x+1][index_hero_y].is_friend():
-        tiles[index_hero_x+1][index_hero_y].color = friend_img
-        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
-        original = sys.stdout
-        sys.stdout = MyOutput()
-        timer.set_timeout(print, i, "Hey! Thank you for not killing me!\n")
-        sys.stdout = original
-        tiles[index_hero_x+1][index_hero_y].allowed = 1
-        num_villain -= 1
-    else:
-        timer.set_timeout(alert,i,"No one in the Right")
-        timer.set_timeout(window.fail,i)
-    i += 500'''
     global i
     global num_villain
     if tiles[index_hero_x+1][index_hero_y].is_enemy():
@@ -254,7 +232,10 @@ def unveil_friend():
     elif tiles[index_hero_x+1][index_hero_y].is_friend():
         tiles[index_hero_x+1][index_hero_y].color = friend_img
         timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
-        timer.set_timeout(alert, i, "Hey! Thank you for not killing me!")
+        original = sys.stdout
+        sys.stdout = MyOutput()
+        timer.set_timeout(print, i, "Hey! Thank you for not killing me!")
+        sys.stdout = original
         i+=500
         num_villain-=1
     else:
@@ -262,30 +243,6 @@ def unveil_friend():
         timer.set_timeout(window.fail,i)
 
 def attack():
-    '''global i
-    global num_villain
-    if tiles[index_hero_x+1][index_hero_y].is_enemy():
-        tiles[index_hero_x+1][index_hero_y].allowed = 1
-        tiles[index_hero_x+1][index_hero_y].color = villain_dead
-        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i-500)
-        def delay():
-            global index_hero_x, index_hero_y, bomb_img
-            tiles[index_hero_x+1][index_hero_y].color = bomb_img
-        timer.set_timeout(delay, i)
-        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
-        i+=1000
-        num_villain-=1;
-    elif tiles[index_hero_x+1][index_hero_y].is_friend():
-        timer.set_timeout(context.drawImage,i, bomb_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
-        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
-        timer.set_timeout(context.drawImage,i, friend_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
-        i+=1000
-        timer.set_timeout(alert,i,"You just killed your best friend!")
-        timer.set_timeout(window.fail,i)
-    else:
-        timer.set_timeout(alert,i,"No one in the Right")
-        timer.set_timeout(window.fail,i)'''
-    
     global i
     global num_villain
     if tiles[index_hero_x+1][index_hero_y].is_enemy():

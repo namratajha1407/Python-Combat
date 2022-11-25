@@ -87,12 +87,13 @@ createArena = function(Tile_Height, Tile_Width){
             v.draw();
             tiles[i][j].allowed = false;
             if((i+j) % 2==0){
-                tiles[i][j].enemy = true;
+                // tiles[i][j].enemy = true;
+                tiles[i][j].friend = true;
                 n_villain++;
             }
             else{
-                // tiles[i][j].friend = true;
-                tiles[i][j].enemy = true;
+                tiles[i][j].friend = true;
+                // tiles[i][j].enemy = true;
             }
         }
         else{

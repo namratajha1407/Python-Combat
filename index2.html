@@ -79,8 +79,18 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center">Python Combat - Level 2</h1>
-    <p> Reach the bottom right corner preventing the black forbidden region!</p>
+    <h1 class="text-center">Python Combat - Level 3(For Loop)</h1>
+    <p>
+        Reach the bottom right corner preventing the black forbidden region! <br> <br>
+        Here, you will learn the power of for loops in python. <br>
+        for loops are used to execute a set of commands a certain number of times. <br>
+        For example- In this exercise you are supposed to repeat certain pattern of movement(certain set of commands) <br>
+        So, instead of typing out the commands repeatedly, just put them in a for loop and you are good to go. <br> <br>
+        for loops have easy to learn syntax <br>
+        for loops have a for statement and then a conditional which checks if a parameter is in a certain range. <br>
+        (We are only dealing with the basic type of for loop, for more info you can click on 'More Python' option and explore for yourselves) <br><br>
+        Also you should take care of the indentation(spacing at the start of each line). As the spacing dictates which commands are executed in the loop. <br>
+    </p>
     <div class="container" id="game_area">
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
@@ -94,7 +104,9 @@
 # You can use the inbuilt functions for moving your warrior:
 # moveRight(), moveLeft(), moveDown(), moveUp()
 # You are not allowed to use them more than once
-</textarea>
+
+for i in range():
+    </textarea>
                     <script>
                         var codeArea = document.getElementById('code');
 
@@ -132,9 +144,8 @@
                         editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
-                    <span id="task" class="output"></span>
-                    <br>
-                    <span id="output" class="output"></span>    
+                    <span id="output" class="output"></span>
+                    <br>   
                     <img src="victory_hero.png" id="hero" hidden>
                     <img src="coin.png" id="coin" hidden>
                     <img src="water.jpg" id="water" hidden>
@@ -305,7 +316,6 @@ def callScript(event):
     global i
     document["output"].clear()
     user_code = window.editor.getValue().strip()
-    print(user_code)
     if (check_one()):
         timer.set_timeout(alert,i,"Some movement function used more than once")
     else:

@@ -79,8 +79,18 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center">Python Combat - Level 1</h1>
-    <p> Reach the bottom right corner, after collecting all coins to win!</p>
+    <h1 class="text-center">Python Combat - Level 1(Basic syntax and program flow)</h1>
+    <p>
+        Reach the bottom right corner, after collecting all coins to win! <br>
+
+        Try to reach the corner in minimum number of steps. <br>
+        You can use the hero's movement functions. <br> <br>
+        Also you should write each command in a seperate line, that is how Python understands the commands. <br>
+        (It's not human so it can't understand program written in any format, <br>
+        the specific format it understands is defined by it's syntax.) <br> <br>
+        A Python program is executed line by line, which means the line written first is executed first. <br>
+        e.g.- moveDown() followed by moveRight() first moves the hero down then to the right. <br>
+    </p>
     <div class="container" id="game_area">
         <div class="row">
             <div class="col-lg-6 mb-2" style="height: 80vh;">
@@ -131,9 +141,8 @@
                         editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
-                    <span id="task" class="output"></span>
-                    <br>
-                    <span id="output" class="output"></span>    
+                    <span id="output" class="output"></span>
+                    <br>   
                     <img src="victory_hero.png" id="hero" hidden>
                     <img src="coin.png" id="coin" hidden>
                     <img src="water.jpg" id="water" hidden>
