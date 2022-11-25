@@ -92,20 +92,13 @@ createArena = function(Tile_Height, Tile_Width){
 }
 
 createArena(Height, Width);
-// var initial_arena = canvas.toDataURL("img/png").replace("img/png", "image/octet-stream");
-// window.location.href=initial_arena;
-
-// reload = function(arena_width, arena_height){
-//     var arena_img = document.getElementById('arena_image')
-//     arena_img.src = initial_arena;
-//     context.drawImage(arena_img, 0, 0, arena_width, arena_height);
-// }
 
 success = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
     //show "Well done! Next Level" button, which loads the next page
     document.getElementById("success").style.display = "block";
+    success_button.style.display = "block";
 }
 
 fail = function(){
@@ -113,6 +106,7 @@ fail = function(){
     game.style.opacity = 0.5;
     //show "Try Again!" button, which reloads the page
     document.getElementById("fail").style.display = "block";
+    fail_button.style.display = "block";
 }
 
 document.getElementById("success").onclick = function(){
@@ -122,4 +116,5 @@ document.getElementById("success").onclick = function(){
 document.getElementById("fail").onclick = function(){
     location.reload()
 };
+
 
