@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BNFN</title>
+    <link rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" 
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
+        crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+    
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/python/python.js">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/addon/hint/show-hint.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/addon/hint/show-hint.css">
+    <script src="python-hint.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="Brython/brython.js">
+    </script>
+    <script src="Brython/brython_stdlib.js">
+    </script>
+    
+  </head>
+  
+  <body onload="brython(1)">
+    <nav class="navbar navbar-expand-lg bg-gradient">
+        <div class="container-fluid">
+            <a class="navbar-brand button me-5" href="#">Python Combat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="nav-item dropdown me-auto mb-lg-0">
+                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                        Menu
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Levels</a></li>
+                        <li><a class="dropdown-item" href="#">High Scores</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                    </ul>
+                </div>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">More Python</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 class="text-center">Python Combat - Level 2</h1>
+    <p> Reach the bottom right corner preventing the black forbidden region!</p>
+    <div class="container" id="game_area">
+        <button id="success">Well Done! Next Level</button>
+        <button id="fail">Try Again!</button>
+        <div class="row">
+            <div class="col-lg-6 mb-2" style="height: 80vh;">
+                <span class="work-area">
+                    <input id="fileUpload" type="file">
+                    <button id="run_button">Run</button>
+                    <textarea id="code" class="code rounded" autocomplete="on">
+# This level will test your knowledge of loops in Python!
+
+# This is your coding area! The black area is forbidden. You have to reach the bottom right corner.
+# You can use the inbuilt functions for moving your warrior:
+# moveRight(), moveLeft(), moveDown(), moveUp()
+# You are not allowed to use them more than once
+                    </textarea>
+                    <script>
+                        var codeArea = document.getElementById('code');
+
+                        var editor = CodeMirror.fromTextArea(codeArea, {
+                            mode: {
+                                name: "python",
+                                version: 3,
+                                singleLineStringErrors: false
+                            },
+                            lineNumbers: true,
+                            indentUnit: 4,
+                            extraKeys: {
+                                "Ctrl-Space": "autocomplete"
+                            },
+                            matchBrackets: true,
+                            theme: 'monokai',
+                            autofocus: true,
+                            autocomplete: true
+                        });
+                        editor.on('inputRead', function onChange(editor, input) {
+                            if (input.text[0] === ';' || input.text[0] === ' ' || input.text[0] === ":") {
+                                return;
+                            }
+                            editor.showHint({
+                                hint: CodeMirror.pythonHint,
+                                completeSingle: false
+                            });
+                        });
+                        editor.on('keydown', function(editor, e){
+                            if (e.key == 'F5') {
+                                e.preventDefault();
+                                document.getElementById('run_button').click();
+                            }
+                        });
+
+                    </script>
+                    <span id="task" class="output"></span>
+                    <br>
+                    <span id="output" class="output"></span>    
+                    <img src="victory_hero.png" id="hero" hidden>
+                    <img src="coin.jpg" id="coin" hidden>
+                    <!-- <img id="arena_image" hidden> -->
+                </span>
+            </div>
+            <div class="col-lg-6 mb-2" style="height: 80vh;">
+                <span class="work-area">
+                    <canvas class="arena" id="myCanvas">
+                        Your browser does not support canvas, please upgrade to enjoy the game.
+                    </canvas>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+    <script type="text/python" id="script">
+from browser import timer
+import sys
+from browser import document, alert, console, window
+from browser.local_storage import storage
+
+canvas = document["myCanvas"]
+context = canvas.getContext("2d")
+
+class MyOutput:
+    def __init__(self):  
+        self.console = document["output"]
+
+    def write(self, text):
+        self.console.text += text
+
+cHeight = canvas.height
+cWidth = canvas.width
+xtiles = window.xTiles
+ytiles = window.yTiles
+Width = cWidth/xtiles
+Height = cHeight/ytiles
+imgWidth = Width/2
+imgHeight = Height/1.5
+img = document["hero"]
+# context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
+i=0
+
+tiles = window.tiles
+index_hero_x = 0
+index_hero_y = 0
+
+context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
+
+def moveRight():
+    global color
+    global index_hero_x
+    global num_coins
+    global i
+    if index_hero_x < xtiles-1:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_x += 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+        if tiles[index_hero_x][index_hero_y].give_color() == "black":
+            timer.set_timeout(alert,i,"You have entered forbidden region")
+            timer.set_timeout(window.fail,i)
+    else:
+        timer.set_timeout(alert, i, "Your hero is going out of arena")
+def moveLeft():
+    global color
+    global index_hero_x
+    global num_coins
+    global i
+    if index_hero_x > 0:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_x -= 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+        if tiles[index_hero_x][index_hero_y].give_color() == "black":
+            timer.set_timeout(alert,i,"You have entered forbidden region")
+            timer.set_timeout(window.fail,i)
+    else:
+        timer.set_timeout(alert, i, "Your hero is going out of arena")
+def moveDown():
+    global color
+    global index_hero_y
+    global num_coins
+    global i
+    if index_hero_y < ytiles-1:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_y += 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+        if tiles[index_hero_x][index_hero_y].give_color() == "black":
+            timer.set_timeout(alert,i,"You have entered forbidden region")
+            timer.set_timeout(window.fail,i)
+    else:
+        timer.set_timeout(alert, i, "Your hero is going out of arena")
+def moveUp():
+    global color
+    global index_hero_y
+    global num_coins
+    global i
+    if index_hero_y >= 0:
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
+        index_hero_y -= 1
+        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
+        if tiles[index_hero_x][index_hero_y].give_color() == "black":
+            timer.set_timeout(alert,i,"You have entered forbidden region")
+            timer.set_timeout(window.fail,i)
+    else:
+        timer.set_timeout(alert, i, "Your hero is going out of arena")
+
+def levelstatus():
+    task = "Cross the maze to win"
+    if index_hero_x == xtiles-1:
+        if index_hero_y == ytiles-1:
+            console.log('win')
+            storage['Level1'] = 'SUCCESS!'
+            #document["output"] <= storage['Level1']
+            print(storage['Level1'])
+            window.success()
+            return
+    #reload to initial configuration
+    console.log('fail')
+    storage['Level1'] = 'FAIL! Try again!'
+    #document["output"] <= storage['Level1']
+    window.fail()
+
+def check_one():
+    #if any movement function used more than once, return true
+    code = window.editor.getValue().splitlines()
+    count_right = 0
+    count_left = 0
+    count_down = 0
+    count_up = 0
+    for line in code:
+        words = line.split()
+        for word in words:
+            if word == "moveRight()":
+                count_right+=1
+            if word == "moveLeft()":
+                count_left+=1
+            if word == "moveDown()":
+                count_down+=1
+            if word == "moveUp()":
+                count_up+=1
+    if count_right<=1:
+        if count_left<=1:
+            if count_down<=1:
+                if count_up<=1 :
+                    return False
+    return True
+
+def callScript(event):
+    global i
+    document["output"].clear()
+    user_code = window.editor.getValue().strip()
+    print(user_code)
+    if (check_one()):
+        timer.set_timeout(alert,i,"Some movement function used more than once")
+    else:
+        exec(user_code)
+        timer.set_timeout(levelstatus,i)
+
+document["run_button"].bind("click", callScript)
+
+    </script>
+
+    <script type="text/python" id="script1">
+from browser import document, window
+
+def file_read(e):
+    def onload(e):
+        editor = window.editor
+        editor.setValue(e.target.result)
+
+    file = document['fileUpload'].files[0]
+    reader = window.FileReader.new()
+    reader.readAsText(file)
+    reader.bind('load', onload)
+
+document["fileUpload"].bind('input', file_read)
+
+    </script>
+
+</body>
