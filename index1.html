@@ -267,7 +267,11 @@ def callScript(event):
     document["output"].clear()
     user_code = window.editor.getValue().strip()
     print(user_code)
+    original = sys.stdout
+    document["output"].clear()
+    sys.stdout = MyOutput()
     exec(user_code)
+    sys.stdout = original
     timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)
