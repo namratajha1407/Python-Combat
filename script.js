@@ -1,24 +1,33 @@
-var canvas = document.getElementById('myCanvas');
+var canvas = document.getElementById('myCanvas'); ///fetches canvas
 var context = canvas.getContext('2d');
 
-var cHeight = canvas.height;
-var cWidth = canvas.width;
+var cHeight = canvas.height; ///height of canvas
+var cWidth = canvas.width; ///width of canvas
 
 var grass = document.getElementById('grass');
 var water = document.getElementById('water');
 
-var xTiles = 3;
-var yTiles = 3;
+var xTiles = 3; ///initialising the number of tiles in x direction
+var yTiles = 3; ///initialising the number of tiles in y direction
 
 // console.log(xTiles);
-
+/**
+ * class for creating tiles
+ * @param {Number} x row of the tile
+ * @param {Number} y column of the tile
+ * @param {Number} width width of the tile
+ * @param {Number} height height of the tile
+ * @param {Number} color color of the tile
+ */
 function tile(x, y, width, height, color){
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
     this.color = color;
-
+    /**
+     * draws tile on the canvas
+     */
     this.draw = function(){
         context.beginPath();
         context.drawImage(this.color, this.x*this.width, this.y*this.height, this.width, this.height);
@@ -27,8 +36,8 @@ function tile(x, y, width, height, color){
 }
 
 
-var Width = cWidth/xTiles;
-var Height = cHeight/yTiles;
+var Width = cWidth/xTiles; ///width of one tile
+var Height = cHeight/yTiles; ///height of one tile
 
 var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
@@ -39,6 +48,9 @@ for (let i = 0; i < xTiles; i++) {
     }
 }
 
+/**
+ * Logger for displaying SUCCESS
+ */
 success = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
@@ -48,6 +60,9 @@ success = function(){
     success.style.opacity = 1;
 }
 
+/**
+ * Logger for displaying FAILURE
+ */
 fail = function(){
     var game = document.getElementById("game_area");
     game.style.opacity = 0.5;
@@ -57,14 +72,17 @@ fail = function(){
     fail.style.opacity = 1;
 }
 
+///moves to next level
 document.getElementById("next").onclick = function(){
     location.href = "index1.html";
 };
 
+///reloads the level on succes
 document.getElementById("sretry").onclick = function(){
     location.reload();
 };
 
+///reloads the level on failure
 document.getElementById("fretry").onclick = function(){
     location.reload();
 };
