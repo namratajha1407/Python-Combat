@@ -95,7 +95,7 @@
 # You can use the following inbuilt functions: 
 # movement- moveRight(), moveLeft(), moveDown(), moveUp()
 # to check if right tile is forbidden- forbidden()
-                    </textarea>
+</textarea>
                     <script>
                         var codeArea = document.getElementById('code');
 
@@ -130,6 +130,7 @@
                                 document.getElementById('run_button').click();
                             }
                         });
+                        editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
                     <span id="task" class="output"></span>

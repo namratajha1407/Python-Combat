@@ -90,7 +90,7 @@
 # You can use the inbuilt functions for moving your warrior:
 # moveRight(), moveLeft(), moveDown(), moveUp()
 # You are not allowed to use them more than once
-                    </textarea>
+</textarea>
                     <script>
                         var codeArea = document.getElementById('code');
 
@@ -125,6 +125,7 @@
                                 document.getElementById('run_button').click();
                             }
                         });
+                        editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
                     <span id="task" class="output"></span>

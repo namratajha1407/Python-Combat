@@ -91,7 +91,7 @@
 # This is your coding area! Collect all the coins and reach the bottom right corner to win the game! 
 # You can use the inbuilt functions for moving your warrior:
 # moveRight(), moveLeft(), moveDown(), moveUp()
-                    </textarea>
+</textarea>
                     <script>
                         var codeArea = document.getElementById('code');
 
@@ -126,6 +126,7 @@
                                 document.getElementById('run_button').click();
                             }
                         });
+                        editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
                     <span id="task" class="output"></span>
