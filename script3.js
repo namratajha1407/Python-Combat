@@ -8,6 +8,7 @@ var cWidth = canvas.width;
 var grass = document.getElementById('grass');
 var water = document.getElementById('water');
 
+///arena size is randomized using this function
 var r = Math.floor(Math.random()*(10)) + 10;
 
 var xTiles = r;
@@ -53,7 +54,7 @@ for (let i = 0; i < xTiles; i++) {
     }
 }
 
-
+///prints the size of the arena/canvas
 document.getElementById("output").innerText = "This is a " + xTiles + "*" + yTiles + " maze"
 
 success = function(){
