@@ -289,7 +289,11 @@ def callScript(event):
     if (check_one()):
         timer.set_timeout(alert,i,"Some movement function used more than once")
     else:
+        original = sys.stdout
+        document["output"].clear()
+        sys.stdout = MyOutput()
         exec(user_code)
+        sys.stdout = original
         timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)
