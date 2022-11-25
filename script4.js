@@ -60,7 +60,13 @@ for (let i = 0; i < xTiles; i++) {
         tiles[i][j].draw();
     }
 }
-
+/**
+ * 
+ * @param {Number} x row of position of villain
+ * @param {Number} y column 
+ * @param {Number} tile_width 
+ * @param {Number} tile_height 
+ */
 function villain(x, y, tile_width, tile_height){
     this.x = x;
     this.y = y;
@@ -78,6 +84,7 @@ var n = 3;
 let k = 0;
 var n_villain = 0;
 
+///creates arena with random position of the villain
 createArena = function(Tile_Height, Tile_Width){
     for(let k=0; k<n; k++){
         var j = k+1;
