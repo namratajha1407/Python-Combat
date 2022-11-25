@@ -11,7 +11,7 @@
     display: block;
     width: 100%;
     height: 90%;
-    background-color: #5be927;
+    background-color: #202220;
     border-radius: 1%;
 }
 
@@ -70,10 +70,9 @@ canvas.arena{
     position: relative;
     bottom: 0px;
     right: 0px;
-    background: rgb(31, 182, 34);
+    background: rgb(32, 182, 114);
     color: rgb(13, 5, 19);
     border: 1px solid black;
-    border-radius: 5px;
     padding: 0px 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: 1s;
@@ -85,10 +84,10 @@ canvas.arena{
     position: relative;
     bottom: 1px;
     right: 0px;
-    background: rgb(31, 182, 34);
-    color: rgb(13, 5, 19);
+    background: rgb(17, 17, 17);
+    color: #ccc;
     border: 1px solid black;
-    border-radius: 5px;
+    width: 100%;
     padding: 0px 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     /* margin: 20px 0; */
@@ -105,7 +104,7 @@ input[type="file"]::file-selector-button {
     border: 1px solid black;
     padding: 0px 0px;
     border-radius: 5px;
-    background: rgb(31, 182, 34);
+    background: rgb(225, 229, 225);
     transition: 1s;
   }
   

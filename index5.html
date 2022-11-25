@@ -82,8 +82,18 @@
     </nav>
     <h1 class="text-center">Level 4</h1>
     <p id="desc"> 
-        Reach the bottom right corner. Water is forbidden except for one cell... But the twist is you don't know which one is not forbidden!
-        <br> Before stepping into the black region, you have to check if it is forbidden or not. Also, it is a big big maze... Can recursion help?
+        Reach the bottom right corner. There is one fake among the water tiles ... But the twist is you don't know which one is!
+        <br> Before stepping into the water region, you have to check if it is fake or not. Also, it is a big big maze... Can recursion help? <br><br>
+
+        Here you will learn about functions and recursion. <br>
+        Functions are like creating a new command, which in turns execute various commands. <br>
+        Function can be created using the 'def' keyword. <br>
+        A template for function has also been provided. <br><br>
+
+        Recursion is the idea of calling a function in itself(Usually when you have to repeat the same set of command on a smaller set of objects). <br>
+        Also you have to add a base case condition for stopping the execusion of your code. <br>
+        Again, a template is provided for your help.
+
     </p>
     <div class="container" id="game_area">
         <div class="row">
@@ -98,6 +108,15 @@
 # You can use the following inbuilt functions: 
 # movement- moveRight(), moveLeft(), moveDown(), moveUp()
 # to check if right tile is forbidden- forbidden()
+
+# Function template
+# def function_name(parameter1, parameter2, ...):
+#    Do something(s)
+
+# Recursion template
+# def function_name(parameters):
+#    Terminate if base case is reached
+#    function_name(new parameters)
 </textarea>
                     <script>
                         var codeArea = document.getElementById('code');
