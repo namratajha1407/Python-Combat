@@ -8,18 +8,16 @@ var cWidth = canvas.width;
 var grass = document.getElementById('grass');
 var water = document.getElementById('water');
 
-var r = Math.floor(Math.random()*(10)) + 10;
+var xTiles = Math.floor(Math.random()*(3))*5 + 10; //can be 10,15 or 20
+var yTiles = xTiles;
 
-var xTiles = r;
-var yTiles = r;
-
-function tile(x, y, width, height, color, is_coin){
+function tile(x, y, width, height, color){
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
     this.color = color;
-    this.is_coin = false;
+    this.allowed = true;
 
     this.draw = function(){
         context.beginPath();
@@ -27,32 +25,38 @@ function tile(x, y, width, height, color, is_coin){
         context.closePath();
     }
 
-    this.give_color = function(){
-        return this.color;
+    this.not_allowed = function(){
+        if(this.allowed){
+            return false;
+        }
+        return true;
     }
 }
 
-
 var Width = cWidth/xTiles;
 var Height = cHeight/yTiles;
+
+b = Math.floor(Math.random()*(yTiles));
+
+p=1;
+q=b;
 
 var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
-        if (i==j){
-            tiles[i][j] = new tile(i, j, Width, Height, grass);
-        }
-        else if ((i-j) == 1){
+        if(i!=p){
             tiles[i][j] = new tile(i, j, Width, Height, grass);
         }
         else{
             tiles[i][j] = new tile(i, j, Width, Height, water);
+            if(j!=q){
+                tiles[i][j].allowed = false;
+            }
         }
         tiles[i][j].draw();
     }
 }
-
 
 document.getElementById("output").innerText = "This is a " + xTiles + "*" + yTiles + " maze"
 
@@ -75,7 +79,7 @@ fail = function(){
 }
 
 document.getElementById("next").onclick = function(){
-    location.href = "index3.html"
+    location.href = "index1.html"
 };
 
 document.getElementById("sretry").onclick = function(){
@@ -85,4 +89,3 @@ document.getElementById("sretry").onclick = function(){
 document.getElementById("fretry").onclick = function(){
     location.reload()
 };
-

@@ -79,10 +79,12 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center">Level 4</h1>
+    <h1 class="text-center">Level 3 - Conditional Statements</h1>
     <p id="desc"> 
-        Reach the bottom right corner. The black boxes are forbidden except for one... But the twist is you don't know which one is not forbidden!
-        <br> Before stepping into the black region, you have to check if it is forbidden or not. Also, it is a big big maze... Can recursion help?
+        Reach the bottom right corner, after attacking all the enemies present on the arena. <br>
+        Oh, but you don't know which one is your friend, and which is your enemy... No worries, we're there to help with our inbuilt functions yet again!
+        <br> 
+        Beware! Don't kill you friend or get yourself killed! 
     </p>
     <div class="container" id="game_area">
         <div class="row">
@@ -91,12 +93,14 @@
                     <input id="fileUpload" type="file">
                     <button id="run_button">Run</button>
                     <textarea id="code" class="code rounded" autocomplete="on">
-# This level will test your knowledge of functions in Python!
+# This level will test your knowledge of conditional statements in Python!
 
 # This is your coding area!
 # You can use the following inbuilt functions: 
 # movement- moveRight(), moveLeft(), moveDown(), moveUp()
-# to check if right tile is forbidden- forbidden()
+# attack on the right tile- attack()
+# to unlock friend- unveil_friend()
+# check whether enemy in right tile- enemy()
 </textarea>
                     <script>
                         var codeArea = document.getElementById('code');
@@ -135,12 +139,17 @@
                         editor.setCursor({line: editor.lineCount(), char: 0});
 
                     </script>
-                    <span id="output" class="output"></span>
-                    <br>  
+                    <span id="output" class="output"></span> 
+                    <br> 
                     <img src="victory_hero.png" id="hero" hidden>
                     <img src="coin.png" id="coin" hidden>
+                    <img src="villian1.jpg" id="villain1" hidden>
+                    <img src="villian2.jpeg" id="villain2" hidden>
+                    <img src="bomb.jpg" id="bomb" hidden>
+                    <img src="friend.jfif" id="friend" hidden>
+                    <img src="friend_dead.JPG" id="friend_dead" hidden>
+                    <img src="water.jpg" id="water" hidden>
                     <img src="grass.jpg" id="grass" hidden>
-                    <img src="water.jpg" alt="" id="water" hidden>
                     <!-- <img id="arena_image" hidden> -->
                 </span>
             </div>
@@ -188,8 +197,13 @@ Height = cHeight/ytiles
 imgWidth = Width/2
 imgHeight = Height/1.5
 img = document["hero"]
+bomb_img = document["bomb"]
+friend_img = document["friend"]
+villain_dead = document["villain2"]
+friend_dead = document["friend_dead"]
 allowed_x = window.p
 allowed_y = window.q
+num_villain = window.n
 # context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 i=0
 
@@ -199,11 +213,57 @@ index_hero_y = 0
 
 context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 
-def forbidden():
-    x = index_hero_x+1
-    if(tiles[x][index_hero_y].not_allowed()):
+def enemy():
+    if tiles[index_hero_x+1][index_hero_y].is_enemy():
         return True
     return False
+
+def unveil_friend():
+    global i
+    global num_villain
+    if tiles[index_hero_x+1][index_hero_y].is_enemy():
+        tiles[index_hero_x][index_hero_y].color = bomb_img
+        tiles[index_hero_x+1][index_hero_y].color = villain_dead
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw ,i)
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw ,i)
+        i+=500
+        timer.set_timeout(alert,i,"Enemy killed you!")
+        timer.set_timeout(window.fail,i)
+    elif tiles[index_hero_x+1][index_hero_y].is_friend():
+        tiles[index_hero_x+1][index_hero_y].color = friend_img
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        original = sys.stdout
+        sys.stdout = MyOutput()
+        timer.set_timeout(print, i, "Hey! Thank you for not killing me!")
+        sys.stdout = original
+        i+=500
+        num_villain-=1
+    else:
+        timer.set_timeout(alert,i,"No one in the Right")
+        timer.set_timeout(window.fail,i)
+
+def attack():
+    global i
+    global num_villain
+    if tiles[index_hero_x+1][index_hero_y].is_enemy():
+        tiles[index_hero_x+1][index_hero_y].color = bomb_img
+        timer.set_timeout(context.drawImage,i, villain_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
+        i+=500
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        i+=500
+        num_villain-=1;
+    elif tiles[index_hero_x+1][index_hero_y].is_friend():
+        tiles[index_hero_x+1][index_hero_y].color = bomb_img
+        timer.set_timeout(context.drawImage,i, friend_img, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
+        i+=500
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        i+=500
+        timer.set_timeout(alert,i,"You just killed your best friend!")
+        timer.set_timeout(window.fail,i)
+    else:
+        timer.set_timeout(alert,i,"No one in the Right")
+        timer.set_timeout(window.fail,i)
+        
 
 def moveRight():
     global color
@@ -248,7 +308,6 @@ def moveDown():
         i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
-        timer.set_timeout(window.fail,i)
 def moveUp():
     global color
     global index_hero_y 
@@ -264,25 +323,23 @@ def moveUp():
 
 def levelstatus():
     task = "Cross the maze to win"
-    if index_hero_x == xtiles-1:
-        if index_hero_y == ytiles-1:
-            console.log('win')
-            storage['Level1'] = 'SUCCESS!'
-            #document["output"] <= storage['Level1']
-            print(storage['Level1'])
-            window.success()
-            return
-    #reload to initial configuration
+    if num_villain==0:
+        console.log('win')
+        storage['Level1'] = 'SUCCESS!'
+        #document["output"] <= storage['Level1']
+        print(storage['Level1'])
+        window.success()
+        return
     console.log('fail')
     storage['Level1'] = 'FAIL! Try again!'
     #document["output"] <= storage['Level1']
     window.fail()
 
 def check():
+    # if if else used then false
     code = window.editor.getValue().splitlines()
     count_if = 0
     count_else = 0
-    count_fn = 0
     for line in code:
         words = line.split()
         for word in words:
@@ -294,21 +351,18 @@ def check():
                 count_else+=1
             if word == "else:":
                 count_else+=1
-            if word == "def":
-                count_fn+=1
-    if count_if>1:
+    if count_if<1:
         return True
-    if count_else>1:
-        return True
-    if count_fn<1:
+    if count_else<1:
         return True
     return False
 
 def callScript(event):
     global i
+    document["output"].clear()
     user_code = window.editor.getValue().strip()
     if (check()):
-        timer.set_timeout(alert,i,"Smart! But use function and just one conditional statement!")
+        timer.set_timeout(alert,i,"Use if else statements!")
     else:
         original = sys.stdout
         document["output"].clear()

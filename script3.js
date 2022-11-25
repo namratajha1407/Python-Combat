@@ -1,6 +1,6 @@
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
-var villain_img = document.getElementById('villain1');
+var coin_img = document.getElementById('coin');
 
 var cHeight = canvas.height;
 var cWidth = canvas.width;
@@ -8,18 +8,18 @@ var cWidth = canvas.width;
 var grass = document.getElementById('grass');
 var water = document.getElementById('water');
 
-var xTiles = 4;
-var yTiles = 4;
+var r = Math.floor(Math.random()*(10)) + 10;
 
-function tile(x, y, width, height, color){
+var xTiles = r;
+var yTiles = r;
+
+function tile(x, y, width, height, color, is_coin){
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
     this.color = color;
-    this.allowed = true;
-    this.enemy = false;
-    this.friend = false;
+    this.is_coin = false;
 
     this.draw = function(){
         context.beginPath();
@@ -27,81 +27,34 @@ function tile(x, y, width, height, color){
         context.closePath();
     }
 
-    this.not_allowed = function(){
-        if(this.allowed){
-            return false;
-        }
-        return true;
-    }
-
-    this.is_enemy = function(){
-        return this.enemy;
-    }
-
-    this.is_friend = function(){
-        return this.friend; 
+    this.give_color = function(){
+        return this.color;
     }
 }
 
+
 var Width = cWidth/xTiles;
 var Height = cHeight/yTiles;
-
-a = Math.floor(Math.random()*(2))+1; // 1 or 2
-b = Math.floor(Math.random()*(4));
-
-p=1;
-q=b;
 
 var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
-        tiles[i][j] = new tile(i, j, Width, Height, grass);
+        if (i==j){
+            tiles[i][j] = new tile(i, j, Width, Height, grass);
+        }
+        else if ((i-j) == 1){
+            tiles[i][j] = new tile(i, j, Width, Height, grass);
+        }
+        else{
+            tiles[i][j] = new tile(i, j, Width, Height, water);
+        }
         tiles[i][j].draw();
     }
 }
 
-function villain(x, y, tile_width, tile_height){
-    this.x = x;
-    this.y = y;
-    this.height = tile_height/2;
-    this.width = tile_width/2;
 
-    this.draw = function(){
-        context.beginPath()
-        context.drawImage(villain_img, this.x*tile_width + tile_width/4, this.y*tile_height + tile_height/4, this.width, this.height);
-        context.closePath()
-    }
-}
-
-var n = 3;
-let k = 0;
-var n_villain = 0;
-
-createArena = function(Tile_Height, Tile_Width){
-    for(let k=0; k<n; k++){
-        var j = k+1;
-        var i = Math.floor(Math.random()*(3))+1;
-        if(i!=xTiles-1 || j!=yTiles-1){   
-            v = new villain(i,j,Tile_Width, Tile_Height);
-            v.draw();
-            tiles[i][j].allowed = false;
-            if((i+j) % 2==0){
-                // tiles[i][j].enemy = true;
-                tiles[i][j].friend = true;
-                n_villain++;
-            }
-            else{
-                tiles[i][j].friend = true;
-                // tiles[i][j].enemy = true;
-            }
-        }
-        else{
-            k--;
-        }
-    }
-}
-createArena(Height, Width);
+document.getElementById("output").innerText = "This is a " + xTiles + "*" + yTiles + " maze"
 
 success = function(){
     var game = document.getElementById("game_area");
@@ -132,3 +85,4 @@ document.getElementById("sretry").onclick = function(){
 document.getElementById("fretry").onclick = function(){
     location.reload()
 };
+

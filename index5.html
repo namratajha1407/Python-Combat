@@ -79,17 +79,10 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center">Python Combat - Level 3(For Loop)</h1>
-    <p>
-        Reach the bottom right corner preventing the black forbidden region! <br> <br>
-        Here, you will learn the power of for loops in python. <br>
-        for loops are used to execute a set of commands a certain number of times. <br>
-        For example- In this exercise you are supposed to repeat certain pattern of movement(certain set of commands) <br>
-        So, instead of typing out the commands repeatedly, just put them in a for loop and you are good to go. <br> <br>
-        for loops have easy to learn syntax <br>
-        for loops have a for statement and then a conditional which checks if a parameter is in a certain range. <br>
-        (We are only dealing with the basic type of for loop, for more info you can click on 'More Python' option and explore for yourselves) <br><br>
-        Also you should take care of the indentation(spacing at the start of each line). As the spacing dictates which commands are executed in the loop. <br>
+    <h1 class="text-center">Level 4</h1>
+    <p id="desc"> 
+        Reach the bottom right corner. The black boxes are forbidden except for one... But the twist is you don't know which one is not forbidden!
+        <br> Before stepping into the black region, you have to check if it is forbidden or not. Also, it is a big big maze... Can recursion help?
     </p>
     <div class="container" id="game_area">
         <div class="row">
@@ -98,15 +91,13 @@
                     <input id="fileUpload" type="file">
                     <button id="run_button">Run</button>
                     <textarea id="code" class="code rounded" autocomplete="on">
-# This level will test your knowledge of loops in Python!
+# This level will test your knowledge of functions in Python!
 
-# This is your coding area! The black area is forbidden. You have to reach the bottom right corner.
-# You can use the inbuilt functions for moving your warrior:
-# moveRight(), moveLeft(), moveDown(), moveUp()
-# You are not allowed to use them more than once
-
-for i in range():
-    </textarea>
+# This is your coding area!
+# You can use the following inbuilt functions: 
+# movement- moveRight(), moveLeft(), moveDown(), moveUp()
+# to check if right tile is forbidden- forbidden()
+</textarea>
                     <script>
                         var codeArea = document.getElementById('code');
 
@@ -145,11 +136,11 @@ for i in range():
 
                     </script>
                     <span id="output" class="output"></span>
-                    <br>   
+                    <br>  
                     <img src="victory_hero.png" id="hero" hidden>
                     <img src="coin.png" id="coin" hidden>
-                    <img src="water.jpg" id="water" hidden>
                     <img src="grass.jpg" id="grass" hidden>
+                    <img src="water.jpg" alt="" id="water" hidden>
                     <!-- <img id="arena_image" hidden> -->
                 </span>
             </div>
@@ -164,14 +155,14 @@ for i in range():
     </div>
     <div id="Success">
         <h2>You Win!</h2>
-        <button id="next">Next Level</button>
+        <button id="next">Replay from Level 1</button>
         <button id="sretry">Play Again!</button>
     </div>
     <div id="Fail">
         <h2>You Failed!</h2>
         <button id="fretry">Try Again!</button>
     </div>
-    <script src="script2.js"></script>
+    <script src="script5.js"></script>
     <script type="text/python" id="script">
 from browser import timer
 import sys
@@ -197,6 +188,8 @@ Height = cHeight/ytiles
 imgWidth = Width/2
 imgHeight = Height/1.5
 img = document["hero"]
+allowed_x = window.p
+allowed_y = window.q
 # context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 i=0
 
@@ -206,67 +199,65 @@ index_hero_y = 0
 
 context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 
+def forbidden():
+    x = index_hero_x+1
+    if(tiles[x][index_hero_y].not_allowed()):
+        return True
+    return False
+
 def moveRight():
     global color
     global index_hero_x
-    global num_coins
     global i
     if index_hero_x < xtiles-1:
         timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         index_hero_x += 1
-        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
-        i+=500
-        if tiles[index_hero_x][index_hero_y].give_color() == "black":
+        if(tiles[index_hero_x][index_hero_y].not_allowed()):
             timer.set_timeout(alert,i,"You have entered forbidden region")
             timer.set_timeout(window.fail,i)
+        else:
+            timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
         timer.set_timeout(window.fail,i)
 def moveLeft():
     global color
     global index_hero_x
-    global num_coins
     global i
     if index_hero_x > 0:
         timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         index_hero_x -= 1
-        timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
-        i+=500
-        if tiles[index_hero_x][index_hero_y].give_color() == "black":
+        if(tiles[index_hero_x][index_hero_y].not_allowed()):
             timer.set_timeout(alert,i,"You have entered forbidden region")
             timer.set_timeout(window.fail,i)
+        else:
+            timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
+        i+=500
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
         timer.set_timeout(window.fail,i)
 def moveDown():
     global color
     global index_hero_y
-    global num_coins
     global i
     if index_hero_y < ytiles-1:
         timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         index_hero_y += 1
         timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
         i+=500
-        if tiles[index_hero_x][index_hero_y].give_color() == "black":
-            timer.set_timeout(alert,i,"You have entered forbidden region")
-            timer.set_timeout(window.fail,i)
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
         timer.set_timeout(window.fail,i)
 def moveUp():
     global color
-    global index_hero_y
-    global num_coins
+    global index_hero_y 
     global i
     if index_hero_y >= 0:
         timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         index_hero_y -= 1
         timer.set_timeout(context.drawImage,i, img, index_hero_x*Width + imgWidth/2, index_hero_y*Height + imgHeight/2, imgWidth, imgHeight)
         i+=500
-        if tiles[index_hero_x][index_hero_y].give_color() == "black":
-            timer.set_timeout(alert,i,"You have entered forbidden region")
-            timer.set_timeout(window.fail,i)
     else:
         timer.set_timeout(alert, i, "Your hero is going out of arena")
         timer.set_timeout(window.fail,i)
@@ -287,37 +278,37 @@ def levelstatus():
     #document["output"] <= storage['Level1']
     window.fail()
 
-def check_one():
-    #if any movement function used more than once, return true
+def check():
     code = window.editor.getValue().splitlines()
-    count_right = 0
-    count_left = 0
-    count_down = 0
-    count_up = 0
+    count_if = 0
+    count_else = 0
+    count_fn = 0
     for line in code:
         words = line.split()
         for word in words:
-            if word == "moveRight()":
-                count_right+=1
-            if word == "moveLeft()":
-                count_left+=1
-            if word == "moveDown()":
-                count_down+=1
-            if word == "moveUp()":
-                count_up+=1
-    if count_right<=1:
-        if count_left<=1:
-            if count_down<=1:
-                if count_up<=1 :
-                    return False
-    return True
+            if word == "if":
+                count_if+=1
+            if word == "if(":
+                count_if+=1
+            if word == "else":
+                count_else+=1
+            if word == "else:":
+                count_else+=1
+            if word == "def":
+                count_fn+=1
+    if count_if>1:
+        return True
+    if count_else>1:
+        return True
+    if count_fn<1:
+        return True
+    return False
 
 def callScript(event):
     global i
-    document["output"].clear()
     user_code = window.editor.getValue().strip()
-    if (check_one()):
-        timer.set_timeout(alert,i,"Some movement function used more than once")
+    if (check()):
+        timer.set_timeout(alert,i,"Smart! But use function and just one conditional statement!")
     else:
         original = sys.stdout
         document["output"].clear()
