@@ -289,12 +289,15 @@ def check():
 
 def callScript(event):
     global i
-    document["output"].clear()
     user_code = window.editor.getValue().strip()
     if (check()):
         timer.set_timeout(alert,i,"Smart! But use function and just one conditional statement!")
     else:
+        original = sys.stdout
+        document["output"].clear()
+        sys.stdout = MyOutput()
         exec(user_code)
+        sys.stdout = original
         timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)
