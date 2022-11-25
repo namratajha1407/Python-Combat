@@ -74,7 +74,7 @@
         </div>
     </nav>
     <h1 class="text-center">Level 3</h1>
-    <p> 
+    <p id="desc"> 
         Reach the bottom right corner. The black boxes are forbidden except for one... But the twist is you don't know which one is not forbidden!
         <br> Before stepping into the black region, you have to check if it is forbidden or not. Can you think of some way to do this using "if else" in Python?
     </p>
@@ -261,13 +261,37 @@ def levelstatus():
     #document["output"] <= storage['Level1']
     window.fail()
 
+def check():
+    # if if else used then false
+    code = window.editor.getValue().splitlines()
+    count_if = 0
+    count_else = 0
+    for line in code:
+        words = line.split()
+        for word in words:
+            if word == "if":
+                count_if+=1
+            if word == "if(":
+                count_if+=1
+            if word == "else":
+                count_else+=1
+            if word == "else:":
+                count_else+=1
+    if count_if<1:
+        return True
+    if count_else<1:
+        return True
+    return False
+
 def callScript(event):
     global i
     document["output"].clear()
     user_code = window.editor.getValue().strip()
-    print(user_code)
-    exec(user_code)
-    timer.set_timeout(levelstatus,i)
+    if (check()):
+        timer.set_timeout(alert,i,"Smart! But use if else statements!")
+    else:
+        exec(user_code)
+        timer.set_timeout(levelstatus,i)
 
 document["run_button"].bind("click", callScript)
 
@@ -291,3 +315,4 @@ document["fileUpload"].bind('input', file_read)
     </script>
 
 </body>
+
