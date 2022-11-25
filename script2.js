@@ -23,7 +23,7 @@ function tile(x, y, width, height, color, is_coin){
 
     this.draw = function(){
         context.beginPath();
-        context.drawImage(color, this.x*this.width, this.y*this.height, this.width, this.height);
+        context.drawImage(this.color, this.x*this.width, this.y*this.height, this.width, this.height);
         context.closePath();
     }
 
@@ -41,13 +41,13 @@ for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
         if (i==j){
-            tiles[i][j] = new tile(i, j, Width, Height, "blue");
+            tiles[i][j] = new tile(i, j, Width, Height, grass);
         }
         else if ((i-j) == 1){
-            tiles[i][j] = new tile(i, j, Width, Height, "red");
+            tiles[i][j] = new tile(i, j, Width, Height, grass);
         }
         else{
-            tiles[i][j] = new tile(i, j, Width, Height, "black");
+            tiles[i][j] = new tile(i, j, Width, Height, water);
         }
         tiles[i][j].draw();
     }

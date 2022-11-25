@@ -23,7 +23,7 @@ function tile(x, y, width, height, color){
 
     this.draw = function(){
         context.beginPath();
-        context.drawImage(color, this.x*this.width, this.y*this.height, this.width, this.height);
+        context.drawImage(this.color, this.x*this.width, this.y*this.height, this.width, this.height);
         context.closePath();
     }
 
@@ -56,13 +56,8 @@ var tiles = new Array(xTiles);
 for (let i = 0; i < xTiles; i++) {
     tiles[i] = new Array(yTiles);
     for (let j = 0; j < yTiles; j++) {
-        if ((i+j)%2){
-            tiles[i][j] = new tile(i, j, Width, Height, "red");
-        }
-        else{
-            tiles[i][j] = new tile(i, j, Width, Height, "blue");
-        }    
-    tiles[i][j].draw();
+        tiles[i][j] = new tile(i, j, Width, Height, grass);
+        tiles[i][j].draw();
     }
 }
 
@@ -96,7 +91,8 @@ createArena = function(Tile_Height, Tile_Width){
                 n_villain++;
             }
             else{
-                tiles[i][j].friend = true;
+                // tiles[i][j].friend = true;
+                tiles[i][j].enemy = true;
             }
         }
         else{

@@ -21,7 +21,7 @@ function tile(x, y, width, height, color){
 
     this.draw = function(){
         context.beginPath();
-        context.drawImage(color, this.x*this.width, this.y*this.height, this.width, this.height);
+        context.drawImage(this.color, this.x*this.width, this.y*this.height, this.width, this.height);
         context.closePath();
     }
 }

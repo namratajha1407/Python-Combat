@@ -149,6 +149,8 @@
                     <img src="bomb.jpg" id="bomb" hidden>
                     <img src="friend.jfif" id="friend" hidden>
                     <img src="friend_dead.JPG" id="friend_dead" hidden>
+                    <img src="water.jpg" id="water" hidden>
+                    <img src="grass.jpg" id="grass" hidden>
                     <!-- <img id="arena_image" hidden> -->
                 </span>
             </div>
@@ -202,7 +204,7 @@ villain_dead = document["villain2"]
 friend_dead = document["friend_dead"]
 allowed_x = window.p
 allowed_y = window.q
-num_villain = window.n_villain
+num_villain = window.n
 # context.drawImage(img, (Width-imgWidth)/2, (Height-imgHeight)/2, imgWidth, imgHeight)
 i=0
 
@@ -218,36 +220,86 @@ def enemy():
     return False
 
 def unveil_friend():
-    global i
+    '''global i, num_villain
     if tiles[index_hero_x+1][index_hero_y].is_enemy():
-        timer.set_timeout(context.drawImage,i, bomb_img, (index_hero_x)*Width, index_hero_y*Height, Width, Height)
+        tiles[index_hero_x+1][index_hero_y].color = villain_dead
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        tiles[index_hero_x][index_hero_y].color = bomb_img
         timer.set_timeout(tiles[index_hero_x][index_hero_y].draw, i)
         timer.set_timeout(alert,i,"Enemy killed you!")
         timer.set_timeout(window.fail,i)
     elif tiles[index_hero_x+1][index_hero_y].is_friend():
-        timer.set_timeout(context.drawImage,i, friend_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
-        timer.set_timeout(print, i, "Hey! Thank you for not killing me!")
+        tiles[index_hero_x+1][index_hero_y].color = friend_img
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        original = sys.stdout
+        sys.stdout = MyOutput()
+        timer.set_timeout(print, i, "Hey! Thank you for not killing me!\n")
+        sys.stdout = original
         tiles[index_hero_x+1][index_hero_y].allowed = 1
+        num_villain -= 1
     else:
         timer.set_timeout(alert,i,"No one in the Right")
         timer.set_timeout(window.fail,i)
-    i += 500
-
-def attack():
+    i += 500'''
     global i
     global num_villain
     if tiles[index_hero_x+1][index_hero_y].is_enemy():
-        tiles[index_hero_x+1][index_hero_y].allowed = 1
-        timer.set_timeout(context.drawImage, i, bomb_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
-        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
-        timer.set_timeout(context.drawImage,i, villain_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
-        tiles[index_hero_x+1][index_hero_y].allowed = 1
+        tiles[index_hero_x][index_hero_y].color = bomb_img
+        tiles[index_hero_x+1][index_hero_y].color = villain_dead
+        timer.set_timeout(tiles[index_hero_x][index_hero_y].draw ,i)
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw ,i)
         i+=500
+        timer.set_timeout(alert,i,"Enemy killed you!")
+        timer.set_timeout(window.fail,i)
+    elif tiles[index_hero_x+1][index_hero_y].is_friend():
+        tiles[index_hero_x+1][index_hero_y].color = friend_img
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        timer.set_timeout(alert, i, "Hey! Thank you for not killing me!")
+        i+=500
+        num_villain-=1
+    else:
+        timer.set_timeout(alert,i,"No one in the Right")
+        timer.set_timeout(window.fail,i)
+
+def attack():
+    '''global i
+    global num_villain
+    if tiles[index_hero_x+1][index_hero_y].is_enemy():
+        tiles[index_hero_x+1][index_hero_y].allowed = 1
+        tiles[index_hero_x+1][index_hero_y].color = villain_dead
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i-500)
+        def delay():
+            global index_hero_x, index_hero_y, bomb_img
+            tiles[index_hero_x+1][index_hero_y].color = bomb_img
+        timer.set_timeout(delay, i)
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        i+=1000
         num_villain-=1;
     elif tiles[index_hero_x+1][index_hero_y].is_friend():
         timer.set_timeout(context.drawImage,i, bomb_img, (index_hero_x+1)*Width, index_hero_y*Height, Width, Height)
         timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
         timer.set_timeout(context.drawImage,i, friend_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
+        i+=1000
+        timer.set_timeout(alert,i,"You just killed your best friend!")
+        timer.set_timeout(window.fail,i)
+    else:
+        timer.set_timeout(alert,i,"No one in the Right")
+        timer.set_timeout(window.fail,i)'''
+    
+    global i
+    global num_villain
+    if tiles[index_hero_x+1][index_hero_y].is_enemy():
+        tiles[index_hero_x+1][index_hero_y].color = bomb_img
+        timer.set_timeout(context.drawImage,i, villain_dead, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
+        i+=500
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
+        i+=500
+        num_villain-=1;
+    elif tiles[index_hero_x+1][index_hero_y].is_friend():
+        tiles[index_hero_x+1][index_hero_y].color = bomb_img
+        timer.set_timeout(context.drawImage,i, friend_img, (index_hero_x+1)*Width+Width/4, index_hero_y*Height+Height/4, Width/2, Height/2)
+        i+=500
+        timer.set_timeout(tiles[index_hero_x+1][index_hero_y].draw, i)
         i+=500
         timer.set_timeout(alert,i,"You just killed your best friend!")
         timer.set_timeout(window.fail,i)
@@ -315,14 +367,12 @@ def moveUp():
 def levelstatus():
     task = "Cross the maze to win"
     if num_villain==0:
-        if index_hero_x == xtiles-1:
-            if index_hero_y == ytiles-1:
-                console.log('win')
-                storage['Level1'] = 'SUCCESS!'
-                #document["output"] <= storage['Level1']
-                print(storage['Level1'])
-                window.success()
-                return
+        console.log('win')
+        storage['Level1'] = 'SUCCESS!'
+        #document["output"] <= storage['Level1']
+        print(storage['Level1'])
+        window.success()
+        return
     console.log('fail')
     storage['Level1'] = 'FAIL! Try again!'
     #document["output"] <= storage['Level1']
