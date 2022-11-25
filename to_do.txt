@@ -6,3 +6,4 @@
 - timer
 - naam puchna
 - only python files allowed to be uploaded
+- print statements for debugging
